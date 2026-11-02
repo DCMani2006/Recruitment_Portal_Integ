@@ -190,7 +190,7 @@ describe("emailer Module Test Suite (Interview Confirmation)", () => {
             const email = prepareConfirmationEmail(details);
             assert.ok(email);
             assert.strictEqual(email.to, "rahul@example.com");
-            assert.strictEqual(email.subject, "Interview Confirmation – Club Recruitment");
+            assert.strictEqual(email.subject, "Interview Confirmed | TAM Recruitment");
 
             // Check candidate name
             assert.match(email.message, /Rahul Sharma/);
@@ -206,8 +206,8 @@ describe("emailer Module Test Suite (Interview Confirmation)", () => {
             assert.match(email.html, /href="https:\/\/meet\.google\.com\/abc-defg-hij"/);
 
             // Check closing
-            assert.match(email.message, /The Recruitment Team/);
-            assert.match(email.html, /The Recruitment Team/);
+            assert.match(email.message, /Team TAM/);
+            assert.match(email.html, /The Recruitment Desk/);
         });
 
         it("should respect explicit UTC 'Z' timezone", () => {
@@ -245,7 +245,7 @@ describe("emailer Module Test Suite (Interview Confirmation)", () => {
             const sent = mockSentEmails[0];
 
             assert.strictEqual(sent.to, "aarav@example.com");
-            assert.strictEqual(sent.subject, "Interview Confirmation – Club Recruitment");
+            assert.strictEqual(sent.subject, "Interview Confirmed | TAM Recruitment");
             assert.match(sent.text, /Aarav Gupta/);
             assert.match(sent.text, /https:\/\/meet\.example\.com\/aarav/);
             assert.match(sent.html, /href="https:\/\/meet\.example\.com\/aarav"/);

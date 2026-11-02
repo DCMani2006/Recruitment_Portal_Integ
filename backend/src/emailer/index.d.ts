@@ -35,6 +35,11 @@ export interface EmailData {
     html: string;
     formattedTime: string;
     meetingLink: string;
+    attachments?: Array<{
+        filename: string;
+        path: string;
+        cid?: string;
+    }>;
 }
 
 export interface EmailOptions {
@@ -44,6 +49,7 @@ export interface EmailOptions {
     text?: string;
     html?: string;
     replyTo?: string;
+    attachments?: any[];
 }
 
 /**
