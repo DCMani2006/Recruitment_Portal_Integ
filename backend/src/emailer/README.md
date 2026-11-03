@@ -175,7 +175,7 @@ Before linking the module to real applicant traffic, `batchTest.js` allows devel
    const candidates = [
      {
        name: "Test Candidate 1",
-       email: "parth.garg2024@vitstudent.ac.in",
+       email: "jhon.doe2023@vitstudent.ac.in",
        time: "2026-10-25T15:00:00+05:30",
        meetingLink: "https://meet.google.com/abc-defg-hij"
      }

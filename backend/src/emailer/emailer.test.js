@@ -161,7 +161,7 @@ describe("emailer Module Test Suite (Interview Confirmation)", () => {
     describe("College Email Validation (validateCollegeEmail & COLLEGE_EMAIL_REGEX)", () => {
         it("should accept valid college emails matching firstName.SurnameYear@vitstudent.ac.in", () => {
             const validEmails = [
-                "Parth.garg2024@vitstudent.ac.in",
+                "jhon.doe2023@vitstudent.ac.in",
                 "ark.maheshwari2025@vitstudent.ac.in",
                 "john.doe2023@vitstudent.ac.in",
                 "aarav.sharma2026@vitstudent.ac.in",
@@ -178,7 +178,7 @@ describe("emailer Module Test Suite (Interview Confirmation)", () => {
 
         it("should be case-insensitive for both name prefix and vitstudent domain", () => {
             const mixedCaseEmails = [
-                "PARTH.GARG2024@VITSTUDENT.AC.IN",
+                "JHON.DOE2023@VITSTUDENT.AC.IN",
                 "John.Doe2023@VitStudent.Ac.In",
                 "ark.maheshwari2025@VITSTUDENT.AC.IN",
                 "AARAV.sharma2026@vitstudent.AC.IN"
@@ -193,14 +193,14 @@ describe("emailer Module Test Suite (Interview Confirmation)", () => {
         });
 
         it("should accept college emails with surrounding whitespace when trimmed", () => {
-            const paddedEmail = "   Parth.garg2024@vitstudent.ac.in   ";
+            const paddedEmail = "   jhon.doe2023@vitstudent.ac.in   ";
             const res = validateCollegeEmail(paddedEmail);
             assert.strictEqual(res.isValid, true);
             assert.strictEqual(isValidCollegeEmail(paddedEmail), true);
         });
 
         it("should reject emails missing the dot separator between first name and surname", () => {
-            const bad = "Parthgarg2024@vitstudent.ac.in";
+            const bad = "jhondoe2023@vitstudent.ac.in";
             const res = validateCollegeEmail(bad);
             assert.strictEqual(res.isValid, false);
             assert.strictEqual(isValidCollegeEmail(bad), false);
@@ -208,11 +208,11 @@ describe("emailer Module Test Suite (Interview Confirmation)", () => {
 
         it("should reject invalid separators (hyphens, underscores, spaces, extra dots)", () => {
             const badSeparators = [
-                "Parth-garg2024@vitstudent.ac.in",
-                "Parth_garg2024@vitstudent.ac.in",
-                "Parth garg2024@vitstudent.ac.in",
-                "Parth..garg2024@vitstudent.ac.in",
-                "P.arth.garg2024@vitstudent.ac.in"
+                "jhon-doe2023@vitstudent.ac.in",
+                "jhon_doe2023@vitstudent.ac.in",
+                "jhon doe2023@vitstudent.ac.in",
+                "jhon..doe2023@vitstudent.ac.in",
+                "j.hon.doe2023@vitstudent.ac.in"
             ];
 
             for (const email of badSeparators) {
@@ -224,12 +224,12 @@ describe("emailer Module Test Suite (Interview Confirmation)", () => {
 
         it("should reject missing or invalid 4-digit admission/graduation year", () => {
             const badYears = [
-                "Parth.garg@vitstudent.ac.in",         // missing year
-                "Parth.garg24@vitstudent.ac.in",       // 2-digit year
-                "Parth.garg202@vitstudent.ac.in",      // 3-digit year
-                "Parth.garg20245@vitstudent.ac.in",    // 5-digit year
-                "Parth.garg202a@vitstudent.ac.in",     // non-digit year
-                "Parth.garg2024extra@vitstudent.ac.in" // characters after year
+                "jhon.doe@vitstudent.ac.in",         // missing year
+                "jhon.doe24@vitstudent.ac.in",       // 2-digit year
+                "jhon.doe202@vitstudent.ac.in",      // 3-digit year
+                "jhon.doe20235@vitstudent.ac.in",    // 5-digit year
+                "jhon.doe202a@vitstudent.ac.in",     // non-digit year
+                "jhon.doe2023extra@vitstudent.ac.in" // characters after year
             ];
 
             for (const email of badYears) {
@@ -241,11 +241,11 @@ describe("emailer Module Test Suite (Interview Confirmation)", () => {
 
         it("should reject missing first name, missing surname, or numbers inside names", () => {
             const malformedNames = [
-                ".garg2024@vitstudent.ac.in",        // missing first name
-                "Parth.2024@vitstudent.ac.in",        // missing surname
-                "Parth1.garg2024@vitstudent.ac.in",   // number in first name
-                "Parth.ga1rg2024@vitstudent.ac.in",   // number inside surname
-                "123.garg2024@vitstudent.ac.in"       // numeric first name
+                ".doe2023@vitstudent.ac.in",        // missing first name
+                "jhon.2023@vitstudent.ac.in",        // missing surname
+                "jhon1.doe2023@vitstudent.ac.in",   // number in first name
+                "jhon.do1e2023@vitstudent.ac.in",   // number inside surname
+                "123.doe2023@vitstudent.ac.in"       // numeric first name
             ];
 
             for (const email of malformedNames) {
@@ -257,12 +257,12 @@ describe("emailer Module Test Suite (Interview Confirmation)", () => {
 
         it("should reject invalid domains or non-college emails", () => {
             const wrongDomains = [
-                "Parth.garg2024@gmail.com",
-                "Parth.garg2024@vit.ac.in",
-                "Parth.garg2024@vitstudent.com",
-                "Parth.garg2024@vitstudent.ac.in.com",
-                "Parth.garg2024@subdomain.vitstudent.ac.in",
-                "Parth.garg2024@yahoo.co.in"
+                "jhon.doe2023@gmail.com",
+                "jhon.doe2023@vit.ac.in",
+                "jhon.doe2023@vitstudent.com",
+                "jhon.doe2023@vitstudent.ac.in.com",
+                "jhon.doe2023@subdomain.vitstudent.ac.in",
+                "jhon.doe2023@yahoo.co.in"
             ];
 
             for (const email of wrongDomains) {
@@ -278,7 +278,7 @@ describe("emailer Module Test Suite (Interview Confirmation)", () => {
                 "   ",
                 "plainaddress",
                 "@vitstudent.ac.in",
-                "Parth.garg2024vitstudent.ac.in",
+                "jhon.doe2023vitstudent.ac.in",
                 null,
                 undefined,
                 12345,

@@ -11,7 +11,7 @@
  * - Domain: @vitstudent.ac.in (case-insensitive)
  *
  * Examples:
- * - john.doe2023@vitstudent.ac.in
+ * - jhon.doe2023@vitstudent.ac.in
  */
 const COLLEGE_EMAIL_REGEX = /^[a-zA-Z]+\.[a-zA-Z]+[0-9]{4}@vitstudent\.ac\.in$/i;
 
