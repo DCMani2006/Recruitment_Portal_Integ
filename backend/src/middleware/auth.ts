@@ -30,7 +30,7 @@ export const requireAuth: RequestHandler = (req, _res, next) => {
   try {
     const p = jwt.verify(header.slice(7), config.jwtSecret) as AuthPayload;
     if (!isStudentEmail(p.email)) {
-      return next(new HttpError(403, "Please use your @vitstudent.ac.in email", "EMAIL_NOT_ALLOWED"));
+      return next(new HttpError(403, "Please use your official college email (firstName.SurnameYear@vitstudent.ac.in)", "EMAIL_NOT_ALLOWED"));
     }
     req.auth = { email: p.email, name: p.name, picture: p.picture ?? null };
     next();

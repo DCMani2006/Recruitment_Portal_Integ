@@ -7,6 +7,7 @@ import {
   DOMAIN_META,
   DomainId,
   isRegistrationComplete,
+  COLLEGE_EMAIL_REGEX,
 } from '@/store/useGameStore';
 import {
   apiClient,
@@ -84,9 +85,9 @@ export function SignUpModal() {
 
   const handleSimulatedGoogleOAuth = () => {
     setErrorMsg(null);
-    const trimmedEmail = email.trim().toLowerCase();
+    const trimmedEmail = email.trim();
     const targetEmail =
-      trimmedEmail && trimmedEmail.endsWith('@vitstudent.ac.in')
+      trimmedEmail && COLLEGE_EMAIL_REGEX.test(trimmedEmail)
         ? trimmedEmail
         : 'aarav.sharma2026@vitstudent.ac.in';
     setEmail(targetEmail);
@@ -108,10 +109,10 @@ export function SignUpModal() {
     e.preventDefault();
     setErrorMsg(null);
 
-    const normalizedEmail = email.trim().toLowerCase();
-    if (!normalizedEmail.endsWith('@vitstudent.ac.in')) {
+    const normalizedEmail = email.trim();
+    if (!COLLEGE_EMAIL_REGEX.test(normalizedEmail)) {
       setErrorMsg(
-        'Please sign in with your official @vitstudent.ac.in university email address.'
+        'Please enter your official college email (firstName.SurnameYear@vitstudent.ac.in).'
       );
       return;
     }
@@ -219,9 +220,7 @@ export function SignUpModal() {
     });
   };
 
-  const isEmailValid =
-    email.trim().toLowerCase().endsWith('@vitstudent.ac.in') &&
-    email.trim().length >= 18;
+  const isEmailValid = COLLEGE_EMAIL_REGEX.test(email.trim());
   const isNameValid =
     fullName.trim().length >= 2 && fullName.trim().length <= 100;
   const isRegValid = isValidBackendRegNumber(regNumber);

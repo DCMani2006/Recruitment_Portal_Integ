@@ -129,10 +129,10 @@ export async function bookInterviewSlot(req: Request, res: Response) {
 | File | Purpose | Key Responsibilities |
 | :--- | :--- | :--- |
 | [`index.js`](./index.js) / [`index.d.ts`](./index.d.ts) | Public API Entry Point | Re-exports `sendInterviewConfirmation` and utilities with complete TypeScript type definitions. |
-| [`validation.js`](./validation.js) | Input Validation | Validates `name` (non-empty string), `email` (RFC regex syntax), `time` (valid Date or parseable timestamp), and `meetingLink` (valid HTTP/HTTPS protocol URL). |
+| [`validation.js`](./validation.js) | Input Validation | Validates `name` (non-empty string), `email` (college email format: `firstName.SurnameYear@vitstudent.ac.in`), `time` (valid Date or parseable timestamp), and `meetingLink` (valid HTTP/HTTPS protocol URL). |
 | [`emailService.js`](./emailService.js) | Content & Template Generation | Builds clean plain-text and responsive HTML email templates. Formats interview times with explicit timezone awareness. |
 | [`mailer.js`](./mailer.js) | SMTP Transport & Security | Manages the Nodemailer Gmail transporter, loads `.env` variables securely, sanitizes sender headers, and provides mock hooks (`setTransporter`, `resetTransporter`). |
-| [`emailer.test.js`](./emailer.test.js) | Unit & Integration Test Suite | 14 automated tests covering validation, templating, error isolation, configuration checks, and mocked SMTP transport. |
+| [`emailer.test.js`](./emailer.test.js) | Unit & Integration Test Suite | 22 automated tests covering college email format validation, templating, error isolation, configuration checks, and mocked SMTP transport. |
 | [`batchTest.js`](./batchTest.js) | Manual Deliverability Staging Tool | Interactive CLI to safely send real confirmation test emails to verified developer mailboxes to inspect inbox placement. |
 
 ---
@@ -175,7 +175,7 @@ Before linking the module to real applicant traffic, `batchTest.js` allows devel
    const candidates = [
      {
        name: "Test Candidate 1",
-       email: "your_test_email@example.com",
+       email: "parth.garg2024@vitstudent.ac.in",
        time: "2026-10-25T15:00:00+05:30",
        meetingLink: "https://meet.google.com/abc-defg-hij"
      }
@@ -218,4 +218,4 @@ Run the built-in Node.js test runner suite:
 node --test emailer/emailer.test.js
 ```
 
-This runs all 14 tests in [`emailer/emailer.test.js`](./emailer.test.js). Transporters are mocked so **no live network emails are sent**.
+This runs all 22 tests in [`emailer/emailer.test.js`](./emailer.test.js). Transporters are mocked so **no live network emails are sent**.

@@ -9,8 +9,9 @@ const BASE =
 const TOKEN_KEY = "recruitment-token";
 
 export const STUDENT_EMAIL_DOMAIN = "vitstudent.ac.in";
+export const COLLEGE_EMAIL_REGEX = /^[a-zA-Z]+\.[a-zA-Z]+[0-9]{4}@vitstudent\.ac\.in$/i;
 export const isStudentEmail = (email: string) =>
-  email.trim().toLowerCase().endsWith(`@${STUDENT_EMAIL_DOMAIN}`);
+  typeof email === "string" && COLLEGE_EMAIL_REGEX.test(email.trim());
 
 export type Domain = "TECHNICAL" | "MANAGEMENT" | "DESIGN" | "MARKETING" | "R_AND_D" | "EDITORIAL";
 export type Stage = "FORM_FILLING" | "SHORTLISTED" | "SLOT_CHOOSING" | "INTERVIEW" | "SELECTED" | "REJECTED";

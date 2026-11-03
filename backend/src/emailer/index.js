@@ -23,7 +23,10 @@ const {
 
 const {
     validateInterviewDetails,
-    isValidInterviewDetails
+    isValidInterviewDetails,
+    validateCollegeEmail,
+    isValidCollegeEmail,
+    COLLEGE_EMAIL_REGEX
 } = require("./validation");
 
 const {
@@ -44,6 +47,9 @@ module.exports = {
     // Validation utilities
     validateInterviewDetails,
     isValidInterviewDetails,
+    validateCollegeEmail,
+    isValidCollegeEmail,
+    COLLEGE_EMAIL_REGEX,
 
     // Low-level mailer & transporter helpers (useful for mocking and testing)
     sendEmail,

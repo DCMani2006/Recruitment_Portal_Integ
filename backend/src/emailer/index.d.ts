@@ -86,6 +86,25 @@ export function validateInterviewDetails(
 ): ValidationResult;
 
 /**
+ * Regular expression validating college email: firstName.SurnameYear@vitstudent.ac.in
+ */
+export const COLLEGE_EMAIL_REGEX: RegExp;
+
+/**
+ * Validates a college email string against the official VIT student email pattern.
+ */
+export function validateCollegeEmail(
+    email: any
+): ValidationResult;
+
+/**
+ * Boolean validation check helper for college email.
+ */
+export function isValidCollegeEmail(
+    email: any
+): boolean;
+
+/**
  * Boolean validation check helper.
  */
 export function isValidInterviewDetails(

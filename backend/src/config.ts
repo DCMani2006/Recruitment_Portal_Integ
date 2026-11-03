@@ -25,7 +25,9 @@ export const config = {
   showOtpCodes: testTools && process.env.SHOW_OTP_CODES === "true",
 };
 
-// Only VIT student emails can sign up or log in
+// Only VIT student emails matching firstName.SurnameYear@vitstudent.ac.in can sign up or log in
 export const STUDENT_EMAIL_DOMAIN = "vitstudent.ac.in";
+export const COLLEGE_EMAIL_REGEX = /^[a-zA-Z]+\.[a-zA-Z]+[0-9]{4}@vitstudent\.ac\.in$/i;
 
-export const isStudentEmail = (email: string) => email.toLowerCase().endsWith(`@${STUDENT_EMAIL_DOMAIN}`);
+export const isStudentEmail = (email: string) =>
+  typeof email === "string" && COLLEGE_EMAIL_REGEX.test(email.trim());

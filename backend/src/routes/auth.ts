@@ -26,7 +26,7 @@ const versionOf = (hash: string | null) => crypto.createHash("sha256").update(ha
 const signToken = (u: { email: string; name: string; image: string | null }) =>
   jwt.sign({ email: u.email, name: u.name, picture: u.image ?? null }, config.jwtSecret, { expiresIn: "7d" });
 
-const notStudentEmail = () => new HttpError(403, "Please use your @vitstudent.ac.in email", "EMAIL_NOT_ALLOWED");
+const notStudentEmail = () => new HttpError(403, "Please use your official college email (firstName.SurnameYear@vitstudent.ac.in)", "EMAIL_NOT_ALLOWED");
 
 // ---------- validation ----------
 const email = z.string().trim().toLowerCase().email();

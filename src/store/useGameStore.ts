@@ -319,14 +319,16 @@ const DEFAULT_PROFILE: UserProfile = {
   oauthVerified: false,
 };
 
+export const COLLEGE_EMAIL_REGEX = /^[a-zA-Z]+\.[a-zA-Z]+[0-9]{4}@vitstudent\.ac\.in$/i;
+
 /**
  * Strictly verifies that every field of the first registration pop-up
  * has been filled properly before unlocking movement past Anchor_Gate_SignUp.
  */
 export function isRegistrationComplete(profile?: UserProfile | null): boolean {
   if (!profile || !profile.oauthVerified) return false;
-  const email = (profile.email || '').trim().toLowerCase();
-  if (!email.endsWith('@vitstudent.ac.in') || email.length < 18) return false;
+  const email = (profile.email || '').trim();
+  if (!COLLEGE_EMAIL_REGEX.test(email)) return false;
   const name = (profile.fullName || '').trim();
   if (name.length < 2 || name.length > 100) return false;
   const reg = (profile.regNumber || '').trim().toUpperCase();
