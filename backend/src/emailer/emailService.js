@@ -137,7 +137,7 @@ If you have any questions, feel free to reply to this email.
 
 Best regards,
 Team TAM
-Technical Association of [College Name]`;
+The AI & ML Club, VIT Vellore`;
 
     const html = `
 <!DOCTYPE html>

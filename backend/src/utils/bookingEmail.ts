@@ -29,7 +29,7 @@ export async function sendBookingConfirmation(
         meetingLink: slot.meetingLink,
       });
       if (!email) throw new Error("Couldn't prepare the confirmation email");
-      sent = await sendMail(student.email, email.subject, email.text, email.html);
+      sent = await sendMail(student.email, email.subject, email.text, email.html, email.attachments);
     } else {
       const when = formatInterviewTime(slot.startTime);
       sent = await sendMail(

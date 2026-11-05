@@ -40,19 +40,26 @@ function prepareOTPEmail(details) {
     const safeName = escapeHtml(candidateName);
     const safeOtp = escapeHtml(otp);
 
-    const subject = "Verify your email | TAM Recruitment";
+    // "signup" (default) or "reset": the same code email is used for both
+    const isReset = details.purpose === "reset";
+    const heading = isReset ? "Reset your password" : "Verify your email";
+    const action = isReset
+        ? "reset your password on the TAM Recruitment Portal"
+        : "complete your sign-up on the TAM Recruitment Portal";
+
+    const subject = `${heading} | TAM Recruitment`;
 
     const message = `Hello ${candidateName},
 
-Use this verification code to complete your login to the TAM Recruitment Portal:
+Use this verification code to ${action}:
 
 ${otp}
 
-If you didn't request this code, you can ignore this email.
+It expires in 10 minutes. If you didn't request this code, you can ignore this email.
 
 Best regards,
 Team TAM
-Technical Association of [College Name]`;
+The AI & ML Club, VIT Vellore`;
 
     const html = `
 <!DOCTYPE html>
@@ -142,7 +149,7 @@ Technical Association of [College Name]`;
 
             <!-- Main Heading -->
             <h1 style="margin:0 0 16px 0;font-size:22px;line-height:1.3;font-weight:700;color:#F1F5F9;letter-spacing:-0.3px;">
-                Verify your email
+                ${heading}
             </h1>
 
             <!-- Greeting & Description -->
@@ -150,7 +157,7 @@ Technical Association of [College Name]`;
                 Hello <strong>${safeName}</strong>,
             </p>
             <p style="margin:0 0 24px 0;font-size:14px;line-height:1.55;color:#94A3B8;">
-                Use this verification code to complete your login to the TAM Recruitment Portal.
+                Use this verification code to ${action}. It expires in 10 minutes.
             </p>
 
             <!-- Prominent OTP Display Box -->
