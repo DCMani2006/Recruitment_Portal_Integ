@@ -88,10 +88,16 @@ function MyBooking({ app, onCancelled }: { app: StatusApplication; onCancelled: 
         <p className="muted small">The meeting link will appear here when the interviewer adds it.</p>
       )}
       <Alert>{error}</Alert>
-      <button className="btn danger" onClick={cancel} disabled={busy || tooLate}>
-        {busy ? "Cancelling…" : "Cancel booking"}
-      </button>
-      {tooLate && <p className="small muted" style={{ marginTop: 8 }}>Bookings can't be cancelled within 12 hours of the interview.</p>}
+      {app.canCancelBooking ? (
+        <>
+          <button className="btn danger" onClick={cancel} disabled={busy || tooLate}>
+            {busy ? "Cancelling…" : "Cancel booking"}
+          </button>
+          {tooLate && <p className="small muted" style={{ marginTop: 8 }}>Bookings can't be cancelled within 12 hours of the interview.</p>}
+        </>
+      ) : (
+        <p className="small muted">Your result is out, so this booking can't be changed.</p>
+      )}
     </section>
   );
 }

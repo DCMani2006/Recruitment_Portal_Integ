@@ -10,6 +10,7 @@
     "db:push": "prisma db push",
     "db:seed": "prisma db seed",
     "db:reset": "tsx scripts/reset-db.ts",
+    "db:config": "tsx scripts/setup-config.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

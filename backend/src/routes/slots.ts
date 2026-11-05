@@ -8,6 +8,7 @@ import { requireUser } from "../middleware/auth";
 import { bookSlotSchema, calendarQuerySchema, objectId, slotsQuerySchema } from "../utils/validators";
 import { assertSlotAccess, getApplication } from "../utils/recruitment";
 import { istDateKey, istDayRange, istMonthRange } from "../utils/time";
+import { bookingVisible, canCancelBooking } from "../utils/stages";
 
 const router = Router();
 router.use(...requireUser);
@@ -81,7 +82,7 @@ router.get(
   "/book",
   asyncHandler(async (req, res) => {
     const bookings = await prisma.slotBooking.findMany({
-      where: { application: { userId: req.user!.id } },
+      where: { application: { userId: req.user!.id, stage: { not: "REJECTED" } } }, // see bookingVisible
       include: { slot: { select: { domain: true, startTime: true, endTime: true, meetingLink: true } } },
       orderBy: { createdAt: "asc" },
     });
@@ -158,8 +159,11 @@ router.delete(
       where: { id: bookingId },
       include: { slot: true, application: true },
     });
-    if (!booking || booking.application.userId !== user.id) {
+    if (!booking || booking.application.userId !== user.id || !bookingVisible(booking.application.stage)) {
       throw new HttpError(404, "Booking not found", "BOOKING_NOT_FOUND");
+    }
+    if (!canCancelBooking(booking.application.stage)) {
+      throw new HttpError(409, "Your result is out, so this booking can't be cancelled", "RESULT_OUT");
     }
     if (booking.slot.startTime.getTime() - Date.now() < CANCEL_CUTOFF_MS) {
       throw new HttpError(409, "Too late to cancel this booking", "CANCEL_TOO_LATE");

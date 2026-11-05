@@ -2,7 +2,7 @@ import { Router } from "express";
 import { prisma } from "../prisma";
 import { asyncHandler } from "../middleware/error";
 import { requireUser } from "../middleware/auth";
-import { SLOT_ACCESS_STAGES, STAGES } from "../utils/stages";
+import { SLOT_ACCESS_STAGES, STAGES, bookingVisible, canCancelBooking } from "../utils/stages";
 import { applicationState, getConfig } from "../utils/recruitment";
 import { DOMAIN_LABELS } from "../utils/domains";
 
@@ -39,7 +39,8 @@ router.get(
           rejected: app.stage === "REJECTED",
           ...applicationState(config, app),
           canChooseSlots: SLOT_ACCESS_STAGES.includes(app.stage),
-          booking: app.booking ? { id: app.booking.id, slot: app.booking.slot } : null,
+          booking: app.booking && bookingVisible(app.stage) ? { id: app.booking.id, slot: app.booking.slot } : null,
+          canCancelBooking: !!app.booking && canCancelBooking(app.stage),
         };
       }),
     });
