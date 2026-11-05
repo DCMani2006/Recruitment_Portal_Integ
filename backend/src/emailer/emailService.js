@@ -145,351 +145,260 @@ Technical Association of [College Name]`;
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="dark light">
+    <meta name="supported-color-schemes" content="dark light">
     <title>${subject}</title>
-
-    <link href="https://fonts.googleapis.com/css2?family=Anton&family=IM+Fell+English:ital@0;1&family=Old+Standard+TT:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            color-scheme: dark light;
+            supported-color-schemes: dark light;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+        }
+        table, td {
+            mso-table-lspace: 0pt;
+            mso-table-rspace: 0pt;
+        }
+        img {
+            -ms-interpolation-mode: bicubic;
+            border: 0;
+            outline: none;
+            text-decoration: none;
+        }
+        a[x-apple-data-detectors] {
+            color: inherit !important;
+            text-decoration: none !important;
+            font-size: inherit !important;
+            font-family: inherit !important;
+            font-weight: inherit !important;
+            line-height: inherit !important;
+        }
+        u + #body a {
+            color: inherit !important;
+            text-decoration: none !important;
+            font-size: inherit !important;
+            font-family: inherit !important;
+            font-weight: inherit !important;
+            line-height: inherit !important;
+        }
+        @media only screen and (max-width: 640px) {
+            .wrapper-table {
+                padding: 12px 6px !important;
+            }
+            .main-container {
+                width: 100% !important;
+                max-width: 100% !important;
+                border-radius: 6px !important;
+            }
+            .content-padding {
+                padding-left: 16px !important;
+                padding-right: 16px !important;
+            }
+            .headline-text {
+                font-size: 24px !important;
+                line-height: 1.25 !important;
+            }
+            .action-btn {
+                display: block !important;
+                width: 100% !important;
+                box-sizing: border-box !important;
+                text-align: center !important;
+            }
+            .sub-card {
+                padding: 12px 14px !important;
+            }
+        }
+    </style>
 </head>
 
-<body style="margin:0; padding:0; background-color:#211b17;">
+<body id="body" bgcolor="#0B1220" style="margin:0;padding:0;background-color:#0B1220;color:#F1F5F9;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">
 
-<table width="100%" cellpadding="0" cellspacing="0" border="0"
-       bgcolor="#211b17" style="padding:16px 8px; margin:0 auto;">
-<tr>
-<td align="center">
+<table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#0B1220" class="wrapper-table" style="background-color:#0B1220;padding:24px 10px;">
+<tr><td align="center" bgcolor="#0B1220" style="background-color:#0B1220;">
 
-<table width="640" cellpadding="0" cellspacing="0" border="0"
-       bgcolor="#eee4c9"
-       style="width:100%; max-width:640px; background-color:#eee4c9; color:#29231d;">
+<!-- Main Card Container -->
+<table width="610" cellpadding="0" cellspacing="0" border="0" bgcolor="#111C32" class="main-container" style="width:100%;max-width:610px;background-color:#111C32;border:1px solid #263B5A;border-top:3px solid #2563EB;border-radius:8px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,0.35);">
 
-    <!-- Newspaper metadata -->
+    <!-- Header Section: Logo & Motto (Primary Visual Identity, no metadata or category bars) -->
     <tr>
-        <td style="padding:10px 20px 5px;">
-            <table width="100%" cellpadding="0" cellspacing="0">
+        <td align="center" bgcolor="#111C32" class="content-padding" style="padding:24px 20px 16px;background-color:#111C32;">
+            <table cellpadding="0" cellspacing="0" border="0" align="center" bgcolor="#111C32" style="background-color:#111C32;margin:0 auto;">
                 <tr>
-                    <td style="font-family:'Old Standard TT',Georgia,serif;
-                               font-size:9.5px; letter-spacing:1.5px;
-                               text-transform:uppercase; color:#514638;">
-                        Volume I · Recruitment Edition
-                    </td>
-                    <td align="right"
-                        style="font-family:'Old Standard TT',Georgia,serif;
-                               font-size:9.5px; letter-spacing:1.5px;
-                               text-transform:uppercase; color:#514638;">
-                        The AI &amp; ML Club
-                    </td>
-                </tr>
-            </table>
-        </td>
-    </tr>
-
-    <!-- Masthead -->
-    <tr>
-        <td style="padding:0 20px;">
-            <table width="100%" cellpadding="0" cellspacing="0">
-                <tr>
-                    <td align="center"
-                        style="border-top:2px solid #29231d;
-                               border-bottom:1px solid #29231d;
-                               padding:10px 0 8px;">
-
-                        <table cellpadding="0" cellspacing="0" border="0" align="center" style="margin:0 auto 5px;">
-                            <tr>
-                                <td align="center">
-                                    <img src="cid:tam-club-logo" alt="The AI &amp; ML Club Logo" width="86" height="83" style="display:block;margin:0 auto;border:0;outline:none;text-decoration:none;max-width:86px;height:auto;" />
-                                </td>
-                            </tr>
-                        </table>
-
-                        <div style="font-family:'IM Fell English',Georgia,serif;
-                                    font-size:12px; font-style:italic;
-                                    color:#71634e; margin-top:2px;">
+                    <td align="center" bgcolor="#111C32" style="background-color:#111C32;">
+                        <img src="cid:tam-club-logo@recruitment" alt="The AI &amp; ML Club Logo" width="120" height="116" style="display:block;margin:0 auto 8px;border:0;outline:none;text-decoration:none;max-width:120px;height:auto;" />
+                        <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;font-size:12px;font-style:italic;color:#94A3B8;letter-spacing:0.3px;line-height:1.4;">
                             It's a place for everyone to learn
                         </div>
-
                     </td>
                 </tr>
             </table>
         </td>
     </tr>
 
-    <!-- Edition strip -->
+    <!-- Subtle Divider -->
     <tr>
-        <td style="padding:5px 20px 0;">
-            <table width="100%" cellpadding="0" cellspacing="0"
-                   style="border:1px solid #71634e;">
-                <tr>
-                    <td width="50%" align="center"
-                        style="padding:5px 3px;
-                               font-family:'Old Standard TT',Georgia,serif;
-                               font-size:9.5px; font-weight:bold;
-                               letter-spacing:0.12em;
-                               color:#514638;
-                               border-right:1px solid #71634e;">
-                        CLUB RECRUITMENT
-                    </td>
-                    <td width="50%" align="center"
-                        style="padding:5px 3px;
-                               font-family:'Old Standard TT',Georgia,serif;
-                               font-size:9.5px; font-weight:bold;
-                               letter-spacing:0.12em;
-                               color:#514638;">
-                        OFFICIAL NOTICE
-                    </td>
-                </tr>
-            </table>
+        <td bgcolor="#111C32" class="content-padding" style="padding:0 20px;background-color:#111C32;">
+            <div style="height:1px;background-color:#263B5A;line-height:1px;font-size:1px;">&nbsp;</div>
         </td>
     </tr>
 
-    <!-- Main headline -->
+    <!-- Prominent Headline Block -->
     <tr>
-        <td align="center" style="padding:16px 20px 8px;">
-
-            <div style="font-family:'Old Standard TT',Georgia,serif;
-                        font-size:10px; font-weight:bold;
-                        letter-spacing:0.12em;
-                        color:#963d35; margin-bottom:6px;">
-                SPECIAL RECRUITMENT DISPATCH
+        <td align="center" bgcolor="#111C32" class="content-padding" style="padding:20px 20px 14px;background-color:#111C32;">
+            <div class="headline-text" style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;font-size:28px;font-weight:800;letter-spacing:-0.3px;line-height:1.2;text-transform:uppercase;color:#F1F5F9;">
+                YOUR INTERVIEW<br>IS CONFIRMED!
             </div>
 
-            <div style="font-family:'Anton',Impact,sans-serif;
-                        font-size:32px; font-weight:400;
-                        letter-spacing:-0.01em;
-                        line-height:1.1;
-                        text-transform:uppercase;
-                        color:#211c17;">
-                YOUR INTERVIEW<br>
-                IS CONFIRMED!
-            </div>
-
-            <div style="font-family:'IM Fell English',Georgia,serif;
-                        font-size:13px; font-style:italic;
-                        line-height:1.45; color:#75654e;
-                        margin-top:6px;">
+            <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;font-size:13px;color:#94A3B8;letter-spacing:0.2px;line-height:1.45;margin-top:8px;">
                 An important announcement from the TAM Recruitment Desk.
             </div>
-
         </td>
     </tr>
 
-    <!-- Heavy newspaper divider -->
+    <!-- Subtle Divider -->
     <tr>
-        <td style="padding:0 20px;">
-            <div style="border-top:2px solid #29231d;
-                        border-bottom:1px solid #29231d;
-                        height:3px;"></div>
+        <td bgcolor="#111C32" class="content-padding" style="padding:0 20px;background-color:#111C32;">
+            <div style="height:1px;background-color:#263B5A;line-height:1px;font-size:1px;">&nbsp;</div>
         </td>
     </tr>
 
-    <!-- Introduction -->
+    <!-- Candidate Greeting & Confirmation Message (Left-Aligned) -->
     <tr>
-        <td style="padding:14px 22px 10px;
-                   font-family:'IM Fell English',Georgia,serif;
-                   font-size:14px; line-height:1.65; color:#30291f;">
-
-            <p style="margin:0 0 8px;">
-                Dear <strong>${safeName}</strong>,
+        <td bgcolor="#111C32" class="content-padding" style="padding:18px 22px 14px;text-align:left;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;font-size:14px;line-height:1.65;color:#CBD5E1;background-color:#111C32;">
+            <p style="margin:0 0 10px;text-align:left;color:#CBD5E1;font-size:14px;line-height:1.65;">
+                Dear <strong style="color:#F1F5F9;font-weight:700;">${safeName}</strong>,
             </p>
 
-            <p style="margin:0; text-align:justify;">
+            <p style="margin:0;text-align:left;color:#CBD5E1;font-size:14px;line-height:1.65;">
                 We are pleased to announce that your interview slot for
                 the TAM recruitment drive has officially been confirmed.
                 We look forward to meeting you and hearing your story.
             </p>
-
         </td>
     </tr>
 
-    <!-- Interview bulletin heading -->
+    <!-- Interview Bulletin Section Heading -->
     <tr>
-        <td style="padding:0 20px 8px;">
-            <table width="100%" cellpadding="0" cellspacing="0">
-                <tr>
-                    <td align="center"
-                        style="border-top:1px solid #514638;
-                               border-bottom:1px solid #514638;
-                               padding:6px 0;
-                               font-family:'Old Standard TT',Georgia,serif;
-                               font-size:10px; font-weight:bold;
-                               letter-spacing:0.12em;
-                               color:#963d35;">
-                        ✦ THE INTERVIEW BULLETIN ✦
-                    </td>
-                </tr>
-            </table>
+        <td bgcolor="#111C32" class="content-padding" style="padding:4px 20px 8px;background-color:#111C32;">
+            <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;font-size:11px;font-weight:700;letter-spacing:1.5px;color:#38BDF8;text-transform:uppercase;">
+                ✦ THE INTERVIEW BULLETIN ✦
+            </div>
         </td>
     </tr>
 
-    <!-- Interview details -->
+    <!-- Interview Details Card (Prominent Date & Time + Meeting Access) -->
     <tr>
-        <td style="padding:0 20px 14px;">
-            <table width="100%" cellpadding="0" cellspacing="0"
-                   style="border:1px solid #514638;">
-
+        <td bgcolor="#111C32" class="content-padding" style="padding:0 20px 16px;background-color:#111C32;">
+            <table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#0E1726" class="sub-card" style="border:1px solid #263B5A;border-left:3px solid #2563EB;border-radius:6px;background-color:#0E1726;overflow:hidden;">
+                <!-- Date & Time -->
                 <tr>
-                    <td style="padding:12px 16px;
-                               border-bottom:1px solid #b5a585;">
-
-                        <div style="font-family:'Old Standard TT',Georgia,serif;
-                                    font-size:9.5px; font-weight:bold;
-                                    letter-spacing:0.12em;
-                                    color:#963d35;">
+                    <td bgcolor="#0E1726" style="padding:14px 16px;background-color:#0E1726;border-bottom:1px solid #263B5A;text-align:left;">
+                        <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;font-size:10px;font-weight:700;letter-spacing:1.2px;color:#38BDF8;text-transform:uppercase;">
                             DATE &amp; TIME
                         </div>
-
-                        <div style="font-family:'IM Fell English',Georgia,serif;
-                                    font-size:16px; font-weight:bold;
-                                    line-height:1.4; color:#29231d;
-                                    margin-top:4px;">
+                        <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;font-size:17px;font-weight:700;line-height:1.4;color:#F1F5F9;margin-top:4px;">
                             ${safeTime}
                         </div>
-
                     </td>
                 </tr>
-
+                <!-- Meeting Access -->
                 <tr>
-                    <td style="padding:10px 16px;">
-
-                        <div style="font-family:'Old Standard TT',Georgia,serif;
-                                    font-size:9.5px; font-weight:bold;
-                                    letter-spacing:0.12em;
-                                    color:#963d35;">
+                    <td bgcolor="#0E1726" style="padding:12px 16px;background-color:#0E1726;text-align:left;">
+                        <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;font-size:10px;font-weight:700;letter-spacing:1.2px;color:#38BDF8;text-transform:uppercase;">
                             MEETING ACCESS
                         </div>
-
-                        <div style="font-family:'IM Fell English',Georgia,serif;
-                                    font-size:13px; line-height:1.5;
-                                    color:#514638; margin-top:4px;">
+                        <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;font-size:13px;line-height:1.55;color:#94A3B8;margin-top:4px;">
                             Your interview will take place online.
                             Use the official link below to join.
                         </div>
-
                     </td>
                 </tr>
-
             </table>
         </td>
     </tr>
 
-    <!-- Join button -->
+    <!-- JOIN INTERVIEW Action Button -->
     <tr>
-        <td align="center" style="padding:0 20px 10px;">
-
-            <table cellpadding="0" cellspacing="0" border="0">
+        <td align="center" bgcolor="#111C32" class="content-padding" style="padding:4px 20px 16px;background-color:#111C32;">
+            <table cellpadding="0" cellspacing="0" border="0" align="center" bgcolor="#2563EB" style="margin:0 auto;background-color:#2563EB;border-radius:6px;">
                 <tr>
-                    <td bgcolor="#963d35" align="center"
-                        style="border:1px solid #6e2c27;">
-
-                        <a href="${safeLink}" target="_blank"
-                           style="display:inline-block;
-                                  padding:11px 26px;
-                                  font-family:'Old Standard TT',Georgia,serif;
-                                  font-size:12px; font-weight:bold;
-                                  letter-spacing:0.12em;
-                                  color:#fff0d7; text-decoration:none;">
+                    <td bgcolor="#2563EB" align="center" style="background-color:#2563EB;border-radius:6px;">
+                        <a href="${safeLink}" target="_blank" class="action-btn"
+                           style="display:inline-block;padding:13px 32px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;font-size:13px;font-weight:700;letter-spacing:0.8px;color:#F1F5F9;text-decoration:none;background-color:#2563EB;border-radius:6px;min-height:20px;">
                             JOIN INTERVIEW &nbsp; →
                         </a>
-
                     </td>
                 </tr>
             </table>
 
-            <p style="font-family:'IM Fell English',Georgia,serif;
-                      font-size:11.5px; font-style:italic;
-                      color:#75654e; margin:8px 0 3px;">
+            <p style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;font-size:12px;color:#94A3B8;margin:12px 0 4px;">
                 Alternatively, access your meeting through this link:
             </p>
 
             <a href="${safeLink}" target="_blank"
-               style="font-family:'Old Standard TT',Georgia,serif;
-                      font-size:11px; color:#963d35;
-                      word-break:break-all;">
+               style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;font-size:11.5px;color:#38BDF8;word-break:break-all;text-decoration:underline;">
                 ${safeLink}
             </a>
-
         </td>
     </tr>
 
-    <!-- Recruitment desk note -->
+    <!-- Recruitment Desk Instructions Card -->
     <tr>
-        <td style="padding:8px 20px 14px;">
-            <table width="100%" cellpadding="0" cellspacing="0">
+        <td bgcolor="#111C32" class="content-padding" style="padding:4px 20px 16px;background-color:#111C32;">
+            <table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#0E1726" class="sub-card" style="border:1px solid #263B5A;border-radius:6px;background-color:#0E1726;">
                 <tr>
-                    <td style="border-top:1px solid #514638;
-                               border-bottom:1px solid #514638;
-                               padding:9px 4px;">
-
-                        <div style="font-family:'Old Standard TT',Georgia,serif;
-                                    font-size:10px; font-weight:bold;
-                                    letter-spacing:0.12em;
-                                    color:#963d35; margin-bottom:5px;">
-                            FROM THE RECRUITMENT DESK
-                        </div>
-
-                        <div style="font-family:'IM Fell English',Georgia,serif;
-                                    font-size:12.5px; line-height:1.6;
-                                    color:#514638;">
-                            Please join a few minutes before your scheduled
-                            time and ensure your microphone, camera, and
-                            internet connection are ready. For any queries,
-                            simply contact us on WhatsApp.
-                        </div>
-
+                    <td bgcolor="#16233B" style="padding:7px 14px;background-color:#16233B;border-bottom:1px solid #263B5A;text-align:left;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;font-size:10px;font-weight:700;letter-spacing:1.5px;color:#38BDF8;text-transform:uppercase;">
+                        FROM THE RECRUITMENT DESK
+                    </td>
+                </tr>
+                <tr>
+                    <td bgcolor="#0E1726" style="padding:12px 16px;text-align:left;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;font-size:12.5px;line-height:1.6;color:#94A3B8;background-color:#0E1726;">
+                        Please join a few minutes before your scheduled
+                        time and ensure your microphone, camera, and
+                        internet connection are ready. For any queries,
+                        simply contact us on WhatsApp.
                     </td>
                 </tr>
             </table>
         </td>
     </tr>
 
-    <!-- Signature -->
+    <!-- Closing & Signature -->
     <tr>
-        <td style="padding:0 22px 14px;
-                   font-family:'IM Fell English',Georgia,serif;
-                   color:#30291f;">
-
-            <div style="font-size:14px; line-height:1.5;">
+        <td bgcolor="#111C32" class="content-padding" style="padding:0 22px 18px;text-align:left;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#CBD5E1;background-color:#111C32;">
+            <div style="font-size:14px;line-height:1.5;color:#CBD5E1;">
                 Yours sincerely,<br>
-                <strong>The Recruitment Desk</strong>
+                <strong style="color:#F1F5F9;font-weight:700;">The Recruitment Desk</strong>
             </div>
 
-            <div style="font-size:11.5px; font-style:italic;
-                        color:#75654e; margin-top:2px;">
+            <div style="font-size:11px;font-weight:600;letter-spacing:0.5px;color:#38BDF8;margin-top:4px;">
                 AI &amp; ML Club · VIT Vellore
             </div>
-
         </td>
     </tr>
 
-    <!-- Footer -->
+    <!-- Footer Strip -->
     <tr>
-        <td style="padding:9px 20px;
-                   background-color:#ded0ae;
-                   border-top:2px solid #514638;">
-
-            <table width="100%" cellpadding="0" cellspacing="0">
+        <td bgcolor="#0E1726" class="content-padding" style="padding:10px 20px;background-color:#0E1726;border-top:1px solid #263B5A;">
+            <table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#0E1726" style="background-color:#0E1726;">
                 <tr>
-                    <td style="font-family:'Old Standard TT',Georgia,serif;
-                               font-size:9.5px; font-weight:bold;
-                               letter-spacing:0.12em;
-                               color:#514638;">
+                    <td bgcolor="#0E1726" style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;font-size:9px;font-weight:700;letter-spacing:1.5px;color:#94A3B8;background-color:#0E1726;text-transform:uppercase;">
                         THE TAM TIMES
                     </td>
-
-                    <td align="right"
-                        style="font-family:'Old Standard TT',Georgia,serif;
-                               font-size:9.5px; letter-spacing:0.12em;
-                               color:#514638;">
+                    <td align="right" bgcolor="#0E1726" style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;font-size:9px;font-weight:700;letter-spacing:1.5px;color:#38BDF8;background-color:#0E1726;text-transform:uppercase;">
                         RECRUITMENT DESK
                     </td>
                 </tr>
             </table>
-
         </td>
     </tr>
 
 </table>
-
-</td>
-</tr>
+</td></tr>
 </table>
 
 </body>
@@ -501,7 +410,9 @@ Technical Association of [College Name]`;
         attachments.push({
             filename: "LOGO.png",
             path: LOGO_PATH,
-            cid: "tam-club-logo"
+            cid: "tam-club-logo@recruitment",
+            contentDisposition: "inline",
+            contentType: "image/png"
         });
     }
 
