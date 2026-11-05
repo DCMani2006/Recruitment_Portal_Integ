@@ -87,7 +87,7 @@ function LoginScreen() {
 
   // Pre-tick domain checklist if domain param is passed
   useEffect(() => {
-    const validDomains = ["DESIGN", "MARKETING", "R_AND_D", "MANAGEMENT", "EDITORIAL", "TECHNICAL"];
+    const validDomains = ["DESIGN", "MARKETING", "R_AND_D", "MANAGEMENT", "TECHNICAL"];
     if (domainParam && validDomains.includes(domainParam)) {
       setSelectedDomains((prev) => (prev.includes(domainParam) ? prev : [...prev, domainParam]));
     }
