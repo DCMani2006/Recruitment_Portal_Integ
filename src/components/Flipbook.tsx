@@ -3,6 +3,7 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import Link from "next/link";
 import { FrontPage } from "./FrontPage";
+import { IntroPage } from "./IntroPage";
 import { DomainPage } from "./DomainPage";
 import { BackCoverPage } from "./BackCoverPage";
 import { ThankYouPage } from "./ThankYouPage";
@@ -425,7 +426,7 @@ function FlipbookInner() {
               <FrontPage onSelectPage={flipTo} />
             </div>
 
-            {/* Pages 2 to 6: Division Pages (Design, Marketing, Research, Management, Tech) */}
+            {/* Pages 2 to 7: Division Pages (Editorial, Design, Marketing, Research, Management, Tech) */}
             {DOMAIN_PAGES_DATA.map((dom) => {
               const pageIdx = dom.pageNumber - 1;
               return (
@@ -435,12 +436,12 @@ function FlipbookInner() {
               );
             })}
 
-            {/* Page 7: Clip & Subscribe (soft inner page) */}
+            {/* Page 8: Clip & Subscribe (soft inner page) */}
             <div className="flip-page-item" data-density="soft">
               <BackCoverPage isVisible={isPageVisible(pageIndex("coupon"))} />
             </div>
 
-            {/* Page 8: Thank You (soft inner page) */}
+            {/* Page 9: Thank You (soft inner page) */}
             <div className="flip-page-item" data-density="soft">
               <ThankYouPage
                 onFlipToStart={() => flipTo(0)}
@@ -451,7 +452,7 @@ function FlipbookInner() {
         </div>
       </div>
 
-      {/* 3. SLIM BOTTOM BAR: prev/next and "PAGE X OF 8", height ~44px */}
+      {/* 3. SLIM BOTTOM BAR: prev/next and "PAGE X OF 9", height ~44px */}
       <footer
         style={{
           height: "44px",
