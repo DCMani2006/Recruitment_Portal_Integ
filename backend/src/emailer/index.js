@@ -22,11 +22,19 @@ const {
 } = require("./emailService");
 
 const {
+    sentOTP,
+    prepareOTPEmail
+} = require("./OTPEmailer");
+
+const {
     validateInterviewDetails,
     isValidInterviewDetails,
     validateCollegeEmail,
     isValidCollegeEmail,
-    COLLEGE_EMAIL_REGEX
+    validateOTPDetails,
+    isValidOTPDetails,
+    COLLEGE_EMAIL_REGEX,
+    OTP_REGEX
 } = require("./validation");
 
 const {
@@ -39,17 +47,22 @@ const {
 module.exports = {
     // Primary API
     sendInterviewConfirmation,
+    sentOTP,
 
     // Template and formatting utilities
     prepareConfirmationEmail,
+    prepareOTPEmail,
     formatInterviewTime,
 
     // Validation utilities
     validateInterviewDetails,
     isValidInterviewDetails,
+    validateOTPDetails,
+    isValidOTPDetails,
     validateCollegeEmail,
     isValidCollegeEmail,
     COLLEGE_EMAIL_REGEX,
+    OTP_REGEX,
 
     // Low-level mailer & transporter helpers (useful for mocking and testing)
     sendEmail,

@@ -138,10 +138,83 @@ function isValidInterviewDetails(details) {
     return validateInterviewDetails(details).isValid;
 }
 
+/**
+ * Exactly 6 numeric digits (000000 to 999999).
+ */
+const OTP_REGEX = /^\d{6}$/;
+
+/**
+ * Validates candidate details and OTP code before sending verification email.
+ *
+ * Required fields:
+ * - name: non-empty string
+ * - email: valid college email address format (firstName.SurnameYear@vitstudent.ac.in)
+ * - otp: string of exactly 6 numeric digits (e.g. "004821")
+ *
+ * @param {any} details
+ * @returns {{ isValid: boolean, error?: string }}
+ */
+function validateOTPDetails(details) {
+    if (!details || typeof details !== "object" || Array.isArray(details)) {
+        return {
+            isValid: false,
+            error: "OTP details must be a non-null object."
+        };
+    }
+
+    // 1. Name validation
+    if (typeof details.name !== "string" || details.name.trim() === "") {
+        return {
+            isValid: false,
+            error: "Field 'name' is required and must be a non-empty string."
+        };
+    }
+
+    // 2. Email validation
+    const emailValidation = validateCollegeEmail(details.email);
+    if (!emailValidation.isValid) {
+        return emailValidation;
+    }
+
+    // 3. OTP validation
+    // Treat OTP strictly as a string, never convert to number, preserve leading zeros.
+    if (typeof details.otp !== "string") {
+        return {
+            isValid: false,
+            error: "Field 'otp' is required and must be a string containing exactly 6 numeric digits."
+        };
+    }
+
+    const trimmedOtp = details.otp.trim();
+    if (!OTP_REGEX.test(trimmedOtp)) {
+        return {
+            isValid: false,
+            error: "Field 'otp' must contain exactly 6 numeric digits (000000 to 999999) with no spaces or special characters."
+        };
+    }
+
+    return {
+        isValid: true
+    };
+}
+
+/**
+ * Boolean validation helper for OTP details.
+ * @param {any} details
+ * @returns {boolean}
+ */
+function isValidOTPDetails(details) {
+    return validateOTPDetails(details).isValid;
+}
+
 module.exports = {
     COLLEGE_EMAIL_REGEX,
+    OTP_REGEX,
     validateCollegeEmail,
     isValidCollegeEmail,
     validateInterviewDetails,
-    isValidInterviewDetails
+    isValidInterviewDetails,
+    validateOTPDetails,
+    isValidOTPDetails
 };
+

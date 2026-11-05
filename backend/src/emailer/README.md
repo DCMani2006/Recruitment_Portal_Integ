@@ -1,22 +1,25 @@
-# Recruitment Portal — Interview Confirmation Emailer Module (`emailer/`)
+# Recruitment Portal — Emailer Module (`backend/src/emailer/`)
 
-A dedicated, modular email service built with Node.js and Nodemailer for sending immediate interview confirmation emails to candidates upon reserving or confirming their interview slots.
+A dedicated, modular email service built with Node.js and Nodemailer for sending interview confirmation emails and OTP verification emails to candidates during recruitment drives.
 
 ---
 
 ## Table of Contents
 1. [Module Architecture & Execution Flow](#module-architecture--execution-flow)
-2. [How to Integrate This Module with the Database (Prisma)](#how-to-integrate-this-module-with-the-database-prisma)
+2. [Interview Confirmation Emailer](#how-to-integrate-this-module-with-the-database-prisma)
    - [Candidate Slot Confirmation Controller Example](#candidate-slot-confirmation-controller-example)
    - [Error Handling & Reliability](#error-handling--reliability)
-3. [File-by-File Execution Flow](#file-by-file-execution-flow)
-4. [Date and Time Formatting Conventions](#date-and-time-formatting-conventions)
-5. [Deliverability Batch Tester (`batchTest.js`)](#deliverability-batch-tester-batchtestjs)
-   - [Purpose](#purpose)
-   - [Safety Features](#safety-features)
-   - [How to Use](#how-to-use)
-6. [Environment Configuration](#environment-configuration)
-7. [Running Automated Tests](#running-automated-tests)
+3. [OTP Verification Emailer (`OTPEmailer.js`)](#otp-verification-emailer-otpemailerjs)
+   - [Public API Usage](#public-api-usage)
+   - [Required Parameters](#required-parameters)
+   - [Validation Behaviour](#validation-behaviour)
+   - [Responsibility Split](#responsibility-split)
+   - [OTP Deliverability Batch Tester (`batchTestOtp.js`)](#otp-deliverability-batch-tester-batchtestotpjs)
+4. [File-by-File Execution Flow](#file-by-file-execution-flow)
+5. [Date and Time Formatting Conventions](#date-and-time-formatting-conventions)
+6. [Deliverability Batch Testers (`batchTest.js` & `batchTestOtp.js`)](#deliverability-batch-tester-batchtestjs)
+7. [Environment Configuration](#environment-configuration)
+8. [Running Automated Tests](#running-automated-tests)
 
 ---
 
@@ -124,16 +127,72 @@ export async function bookInterviewSlot(req: Request, res: Response) {
 
 ---
 
+## OTP Verification Emailer (`OTPEmailer.js`)
+
+The OTP emailer provides secure, responsive verification email dispatch for candidate authentication and login workflows.
+
+### Public API Usage
+
+```typescript
+import { sentOTP, prepareOTPEmail } from '../emailer';
+
+// Direct dispatch via public API:
+const result = await sentOTP({
+  name: "Rahul Sharma",
+  email: "rahul.sharma2025@vitstudent.ac.in",
+  otp: "004821"
+});
+
+console.log(`OTP sent to ${result.recipient} [Message ID: ${result.messageId}]`);
+```
+
+### Required Parameters
+
+| Parameter | Type | Requirements |
+| :--- | :--- | :--- |
+| `name` | `string` | Required, non-empty candidate name. |
+| `email` | `string` | Required official college email (`firstName.SurnameYear@vitstudent.ac.in`). |
+| `otp` | `string` | Required, string containing **exactly 6 numeric digits** (`"000000"` to `"999999"`). |
+
+### Validation Behaviour
+
+- **String Preservation**: OTP is treated strictly as a string to preserve leading zeros (e.g. `"004821"`). It is never cast or converted to a number.
+- **Length & Format**: Validated against `/^\d{6}$/`. Any value with fewer than 6 digits, more than 6 digits, spaces, non-numeric characters, or non-string types is rejected.
+- **Security & Privacy**: The OTP value is **never logged** to the terminal or error outputs.
+- **College Domain**: Recipient email must adhere to the official college format (`firstName.SurnameYear@vitstudent.ac.in`).
+
+### Responsibility Split
+
+> [!IMPORTANT]
+> - **User Backend Responsibility**: The backend auth controller is strictly responsible for generating secure random OTPs, storing them (or their cryptographic hashes), setting expiration windows (e.g. 10 minutes), rate-limiting requests, and verifying user-submitted codes.
+> - **Emailer Module Responsibility**: The `emailer` module is strictly a delivery service. It validates the payload structure, formats the responsive HTML and plain-text template, attaches the TAM club logo, and transmits the email via SMTP.
+
+### OTP Deliverability Batch Tester (`batchTestOtp.js`)
+
+A dedicated CLI script for manual deliverability and inbox placement testing of OTP emails:
+
+1. Edit the `candidates` array in [`backend/src/emailer/batchTestOtp.js`](./batchTestOtp.js).
+2. Run from the backend directory:
+   ```bash
+   node src/emailer/batchTestOtp.js
+   ```
+3. Type `SEND` when prompted.
+4. OTP values are masked as `******` in terminal logs for security.
+
+---
+
 ## File-by-File Execution Flow
 
 | File | Purpose | Key Responsibilities |
 | :--- | :--- | :--- |
-| [`index.js`](./index.js) / [`index.d.ts`](./index.d.ts) | Public API Entry Point | Re-exports `sendInterviewConfirmation` and utilities with complete TypeScript type definitions. |
-| [`validation.js`](./validation.js) | Input Validation | Validates `name` (non-empty string), `email` (college email format: `firstName.SurnameYear@vitstudent.ac.in`), `time` (valid Date or parseable timestamp), and `meetingLink` (valid HTTP/HTTPS protocol URL). |
-| [`emailService.js`](./emailService.js) | Content & Template Generation | Builds clean plain-text and responsive HTML email templates. Formats interview times with explicit timezone awareness. |
-| [`mailer.js`](./mailer.js) | SMTP Transport & Security | Manages the Nodemailer Gmail transporter, loads `.env` variables securely, sanitizes sender headers, and provides mock hooks (`setTransporter`, `resetTransporter`). |
-| [`emailer.test.js`](./emailer.test.js) | Unit & Integration Test Suite | 22 automated tests covering college email format validation, templating, error isolation, configuration checks, and mocked SMTP transport. |
-| [`batchTest.js`](./batchTest.js) | Manual Deliverability Staging Tool | Interactive CLI to safely send real confirmation test emails to verified developer mailboxes to inspect inbox placement. |
+| [`index.js`](./index.js) / [`index.d.ts`](./index.d.ts) | Public API Entry Point | Unified facade exporting `sendInterviewConfirmation`, `sentOTP`, template utilities, and validation helpers with complete TypeScript definitions. |
+| [`OTPEmailer.js`](./OTPEmailer.js) | OTP Email Service | Prepares and delivers OTP verification emails with responsive dark-theme HTML, plain-text fallback, and inline CID logo attachment. |
+| [`emailService.js`](./emailService.js) | Interview Confirmation Service | Builds interview confirmation email templates with timezone-aware formatting and meeting links. |
+| [`validation.js`](./validation.js) | Input Validation | Validates interview details, college emails (`firstName.SurnameYear@vitstudent.ac.in`), and 6-digit numeric OTP strings (`/^\d{6}$/`). |
+| [`mailer.js`](./mailer.js) | SMTP Transport & Security | Manages Nodemailer Gmail transporter, `.env` credentials, sender headers, and mock injection hooks (`setTransporter`, `resetTransporter`). |
+| [`batchTestOtp.js`](./batchTestOtp.js) | OTP Batch Tester | Interactive staging CLI for testing OTP email deliverability with masked console logging. |
+| [`batchTest.js`](./batchTest.js) | Interview Batch Tester | Interactive staging CLI for testing interview confirmation deliverability. |
+| [`emailer.test.js`](./emailer.test.js) | Automated Test Suite | Comprehensive 38-test unit and integration suite covering validation, templates, mock SMTP delivery, and error handling. |
 
 ---
 
@@ -215,7 +274,9 @@ EMAIL_REPLY_TO=your_club_email@gmail.com
 Run the built-in Node.js test runner suite:
 
 ```bash
-node --test emailer/emailer.test.js
+npm test
+# or: node --test src/emailer/emailer.test.js
 ```
 
-This runs all 22 tests in [`emailer/emailer.test.js`](./emailer.test.js). Transporters are mocked so **no live network emails are sent**.
+This runs all 38 tests (22 interview confirmation tests + 16 OTP verification tests) in [`emailer/emailer.test.js`](./emailer.test.js). Transporters are mocked so **no live network emails are sent**.
+
