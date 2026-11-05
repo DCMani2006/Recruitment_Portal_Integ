@@ -44,14 +44,6 @@ const DATA: Record<DomainType, { subsections: string[]; questions: { text: strin
       { text: "Why do you want to join the R&D domain?", sub: null },
     ],
   },
-  EDITORIAL: {
-    subsections: ["Writing", "Editing"],
-    questions: [
-      { text: "Share a piece of writing you are proud of.", sub: 0 },
-      { text: "How would you improve a weak first draft?", sub: 1 },
-      { text: "Why do you want to join the Editorial domain?", sub: null },
-    ],
-  },
 };
 
 const istDate = (d: Date) =>

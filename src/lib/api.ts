@@ -17,7 +17,7 @@ export const STUDENT_EMAIL_DOMAIN = process.env.NEXT_PUBLIC_EMAIL_DOMAIN ?? "vit
 export const isStudentEmail = (email: string) =>
   email.trim().toLowerCase().endsWith(`@${STUDENT_EMAIL_DOMAIN}`);
 
-export type Domain = "TECHNICAL" | "MANAGEMENT" | "DESIGN" | "MARKETING" | "R_AND_D" | "EDITORIAL";
+export type Domain = "TECHNICAL" | "MANAGEMENT" | "DESIGN" | "MARKETING" | "R_AND_D";
 export type Stage = "FORM_FILLING" | "SHORTLISTED" | "SLOT_CHOOSING" | "INTERVIEW" | "SELECTED" | "REJECTED";
 export const ALL_STAGES: Stage[] = ["FORM_FILLING", "SHORTLISTED", "SLOT_CHOOSING", "INTERVIEW", "SELECTED", "REJECTED"];
 

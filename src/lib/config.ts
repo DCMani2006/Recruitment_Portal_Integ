@@ -7,7 +7,6 @@ export const DOMAIN_LABELS: Record<string, string> = {
   MARKETING: "Marketing",
   R_AND_D: "Research & Development",
   MANAGEMENT: "Management",
-  EDITORIAL: "Editorial",
   TECHNICAL: "Tech",
 };
 

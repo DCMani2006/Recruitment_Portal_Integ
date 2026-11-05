@@ -20,7 +20,6 @@ const ALL_DOMAINS_INFO: { code: Domain; label: string }[] = [
   { code: "MARKETING", label: getDomainLabel("MARKETING") },
   { code: "R_AND_D", label: getDomainLabel("R_AND_D") },
   { code: "MANAGEMENT", label: getDomainLabel("MANAGEMENT") },
-  { code: "EDITORIAL", label: getDomainLabel("EDITORIAL") },
   { code: "TECHNICAL", label: getDomainLabel("TECHNICAL") },
 ];
 
