@@ -168,6 +168,9 @@ function LoginScreen() {
     try {
       const res = await api.requestOtp(email, "signup");
       setOtpToken(res.otpToken);
+      if (res.testCode) {
+        setOtpCode(res.testCode);
+      }
       setSignupStep(2);
       setResendTimer(30);
       setSuccess("Verification code dispatched! Check your communications.");
@@ -251,6 +254,9 @@ function LoginScreen() {
     try {
       const res = await api.requestOtp(email, "reset");
       setResetOtpToken(res.otpToken);
+      if (res.testCode) {
+        setResetOtp(res.testCode);
+      }
       setResetStep(2);
       setResendTimer(30);
       setSuccess("Password reset cipher dispatched to your address.");
