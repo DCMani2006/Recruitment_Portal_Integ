@@ -3,10 +3,18 @@ const assert = require("node:assert");
 
 const {
     sendInterviewConfirmation,
+    sentOTP,
     prepareConfirmationEmail,
+    prepareOTPEmail,
     formatInterviewTime,
     validateInterviewDetails,
     isValidInterviewDetails,
+    validateOTPDetails,
+    isValidOTPDetails,
+    validateCollegeEmail,
+    isValidCollegeEmail,
+    COLLEGE_EMAIL_REGEX,
+    OTP_REGEX,
     setTransporter,
     resetTransporter
 } = require("./index");
@@ -39,13 +47,14 @@ describe("emailer Module Test Suite (Interview Confirmation)", () => {
     });
 
     // ==========================================
+    // ==========================================
     // 1. Validation Logic
     // ==========================================
     describe("Validation Logic (validation.js)", () => {
         it("should accept valid interview details", () => {
             const input = {
                 name: "Rahul Sharma",
-                email: "rahul@example.com",
+                email: "rahul.sharma2024@vitstudent.ac.in",
                 time: "2026-10-25T15:00:00+05:30",
                 meetingLink: "https://meet.google.com/abc-defg-hij"
             };
@@ -58,7 +67,7 @@ describe("emailer Module Test Suite (Interview Confirmation)", () => {
         it("should accept valid native Date object for time", () => {
             const input = {
                 name: "Priya Patel",
-                email: "priya@example.com",
+                email: "priya.patel2025@vitstudent.ac.in",
                 time: new Date("2026-10-25T15:00:00+05:30"),
                 meetingLink: "https://meet.example.com/slot"
             };
@@ -70,18 +79,18 @@ describe("emailer Module Test Suite (Interview Confirmation)", () => {
         it("should reject missing or empty name", () => {
             const emptyName = {
                 name: "   ",
-                email: "test@example.com",
+                email: "rahul.sharma2024@vitstudent.ac.in",
                 time: "2026-10-25T15:00:00+05:30",
                 meetingLink: "https://meet.example.com"
             };
             const missingName = {
-                email: "test@example.com",
+                email: "rahul.sharma2024@vitstudent.ac.in",
                 time: "2026-10-25T15:00:00+05:30",
                 meetingLink: "https://meet.example.com"
             };
             const nonStringName = {
                 name: 12345,
-                email: "test@example.com",
+                email: "rahul.sharma2024@vitstudent.ac.in",
                 time: "2026-10-25T15:00:00+05:30",
                 meetingLink: "https://meet.example.com"
             };
@@ -94,30 +103,6 @@ describe("emailer Module Test Suite (Interview Confirmation)", () => {
 
             assert.strictEqual(validateInterviewDetails(nonStringName).isValid, false);
             assert.match(validateInterviewDetails(nonStringName).error, /name/i);
-        });
-
-        it("should reject invalid email formats", () => {
-            const invalidEmails = [
-                "",
-                "   ",
-                "plainaddress",
-                "@missingusername.com",
-                "missingdomain@.com",
-                "spaces in@email.com",
-                12345,
-                null
-            ];
-
-            for (const badEmail of invalidEmails) {
-                const res = validateInterviewDetails({
-                    name: "Candidate",
-                    email: badEmail,
-                    time: "2026-10-25T15:00:00+05:30",
-                    meetingLink: "https://meet.example.com"
-                });
-                assert.strictEqual(res.isValid, false, `Expected ${badEmail} to fail`);
-                assert.match(res.error, /email/i);
-            }
         });
 
         it("should reject missing or invalid interview time", () => {
@@ -134,7 +119,7 @@ describe("emailer Module Test Suite (Interview Confirmation)", () => {
             for (const badTime of invalidTimes) {
                 const res = validateInterviewDetails({
                     name: "Candidate",
-                    email: "candidate@example.com",
+                    email: "rahul.sharma2024@vitstudent.ac.in",
                     time: badTime,
                     meetingLink: "https://meet.example.com"
                 });
@@ -158,7 +143,7 @@ describe("emailer Module Test Suite (Interview Confirmation)", () => {
             for (const badUrl of invalidUrls) {
                 const res = validateInterviewDetails({
                     name: "Candidate",
-                    email: "candidate@example.com",
+                    email: "rahul.sharma2024@vitstudent.ac.in",
                     time: "2026-10-25T15:00:00+05:30",
                     meetingLink: badUrl
                 });
@@ -176,21 +161,160 @@ describe("emailer Module Test Suite (Interview Confirmation)", () => {
     });
 
     // ==========================================
+    // 2. College Email Validation
+    // ==========================================
+    describe("College Email Validation (validateCollegeEmail & COLLEGE_EMAIL_REGEX)", () => {
+        it("should accept valid college emails matching firstName.SurnameYear@vitstudent.ac.in", () => {
+            const validEmails = [
+                "jhon.doe2023@vitstudent.ac.in",
+                "rohit.verma2025@vitstudent.ac.in",
+                "john.doe2023@vitstudent.ac.in",
+                "aarav.sharma2026@vitstudent.ac.in",
+                "priya.patel2022@vitstudent.ac.in"
+            ];
+
+            for (const email of validEmails) {
+                const res = validateCollegeEmail(email);
+                assert.strictEqual(res.isValid, true, `Expected valid college email: ${email}`);
+                assert.strictEqual(isValidCollegeEmail(email), true);
+                assert.strictEqual(COLLEGE_EMAIL_REGEX.test(email), true);
+            }
+        });
+
+        it("should be case-insensitive for both name prefix and vitstudent domain", () => {
+            const mixedCaseEmails = [
+                "JHON.DOE2023@VITSTUDENT.AC.IN",
+                "John.Doe2023@VitStudent.Ac.In",
+                "rohit.verma2025@VITSTUDENT.AC.IN",
+                "AARAV.sharma2026@vitstudent.AC.IN"
+            ];
+
+            for (const email of mixedCaseEmails) {
+                const res = validateCollegeEmail(email);
+                assert.strictEqual(res.isValid, true, `Expected case-insensitive match for: ${email}`);
+                assert.strictEqual(isValidCollegeEmail(email), true);
+                assert.strictEqual(COLLEGE_EMAIL_REGEX.test(email), true);
+            }
+        });
+
+        it("should accept college emails with surrounding whitespace when trimmed", () => {
+            const paddedEmail = "   jhon.doe2023@vitstudent.ac.in   ";
+            const res = validateCollegeEmail(paddedEmail);
+            assert.strictEqual(res.isValid, true);
+            assert.strictEqual(isValidCollegeEmail(paddedEmail), true);
+        });
+
+        it("should reject emails missing the dot separator between first name and surname", () => {
+            const bad = "jhondoe2023@vitstudent.ac.in";
+            const res = validateCollegeEmail(bad);
+            assert.strictEqual(res.isValid, false);
+            assert.strictEqual(isValidCollegeEmail(bad), false);
+        });
+
+        it("should reject invalid separators (hyphens, underscores, spaces, extra dots)", () => {
+            const badSeparators = [
+                "jhon-doe2023@vitstudent.ac.in",
+                "jhon_doe2023@vitstudent.ac.in",
+                "jhon doe2023@vitstudent.ac.in",
+                "jhon..doe2023@vitstudent.ac.in",
+                "j.hon.doe2023@vitstudent.ac.in"
+            ];
+
+            for (const email of badSeparators) {
+                const res = validateCollegeEmail(email);
+                assert.strictEqual(res.isValid, false, `Expected rejection for: ${email}`);
+                assert.strictEqual(isValidCollegeEmail(email), false);
+            }
+        });
+
+        it("should reject missing or invalid 4-digit admission/graduation year", () => {
+            const badYears = [
+                "jhon.doe@vitstudent.ac.in",         // missing year
+                "jhon.doe24@vitstudent.ac.in",       // 2-digit year
+                "jhon.doe202@vitstudent.ac.in",      // 3-digit year
+                "jhon.doe20235@vitstudent.ac.in",    // 5-digit year
+                "jhon.doe202a@vitstudent.ac.in",     // non-digit year
+                "jhon.doe2023extra@vitstudent.ac.in" // characters after year
+            ];
+
+            for (const email of badYears) {
+                const res = validateCollegeEmail(email);
+                assert.strictEqual(res.isValid, false, `Expected rejection for bad year: ${email}`);
+                assert.strictEqual(isValidCollegeEmail(email), false);
+            }
+        });
+
+        it("should reject missing first name, missing surname, or numbers inside names", () => {
+            const malformedNames = [
+                ".doe2023@vitstudent.ac.in",        // missing first name
+                "jhon.2023@vitstudent.ac.in",        // missing surname
+                "jhon1.doe2023@vitstudent.ac.in",   // number in first name
+                "jhon.do1e2023@vitstudent.ac.in",   // number inside surname
+                "123.doe2023@vitstudent.ac.in"       // numeric first name
+            ];
+
+            for (const email of malformedNames) {
+                const res = validateCollegeEmail(email);
+                assert.strictEqual(res.isValid, false, `Expected rejection for malformed name: ${email}`);
+                assert.strictEqual(isValidCollegeEmail(email), false);
+            }
+        });
+
+        it("should reject invalid domains or non-college emails", () => {
+            const wrongDomains = [
+                "jhon.doe2023@gmail.com",
+                "jhon.doe2023@vit.ac.in",
+                "jhon.doe2023@vitstudent.com",
+                "jhon.doe2023@vitstudent.ac.in.com",
+                "jhon.doe2023@subdomain.vitstudent.ac.in",
+                "jhon.doe2023@yahoo.co.in"
+            ];
+
+            for (const email of wrongDomains) {
+                const res = validateCollegeEmail(email);
+                assert.strictEqual(res.isValid, false, `Expected rejection for wrong domain: ${email}`);
+                assert.strictEqual(isValidCollegeEmail(email), false);
+            }
+        });
+
+        it("should reject malformed email structures and non-string inputs", () => {
+            const badInputs = [
+                "",
+                "   ",
+                "plainaddress",
+                "@vitstudent.ac.in",
+                "jhon.doe2023vitstudent.ac.in",
+                null,
+                undefined,
+                12345,
+                {},
+                []
+            ];
+
+            for (const input of badInputs) {
+                const res = validateCollegeEmail(input);
+                assert.strictEqual(res.isValid, false, `Expected rejection for bad input: ${input}`);
+                assert.strictEqual(isValidCollegeEmail(input), false);
+            }
+        });
+    });
+
+    // ==========================================
     // 2. Email Template Preparation
     // ==========================================
     describe("Template Preparation (prepareConfirmationEmail)", () => {
         it("should generate professional confirmation email with formatted time and link", () => {
             const details = {
                 name: "Rahul Sharma",
-                email: "rahul@example.com",
+                email: "rahul.sharma2024@vitstudent.ac.in",
                 time: "2026-10-25T15:00:00+05:30",
                 meetingLink: "https://meet.google.com/abc-defg-hij"
             };
 
             const email = prepareConfirmationEmail(details);
             assert.ok(email);
-            assert.strictEqual(email.to, "rahul@example.com");
-            assert.strictEqual(email.subject, "Interview Confirmation – Club Recruitment");
+            assert.strictEqual(email.to, "rahul.sharma2024@vitstudent.ac.in");
+            assert.strictEqual(email.subject, "Interview Confirmed | TAM Recruitment");
 
             // Check candidate name
             assert.match(email.message, /Rahul Sharma/);
@@ -206,8 +330,8 @@ describe("emailer Module Test Suite (Interview Confirmation)", () => {
             assert.match(email.html, /href="https:\/\/meet\.google\.com\/abc-defg-hij"/);
 
             // Check closing
-            assert.match(email.message, /The Recruitment Team/);
-            assert.match(email.html, /The Recruitment Team/);
+            assert.match(email.message, /Team TAM/);
+            assert.match(email.html, /The Team TAM/);
         });
 
         it("should respect explicit UTC 'Z' timezone", () => {
@@ -223,13 +347,13 @@ describe("emailer Module Test Suite (Interview Confirmation)", () => {
     });
 
     // ==========================================
-    // 3. Public API: sendInterviewConfirmation
+    // 4. Public API: sendInterviewConfirmation
     // ==========================================
     describe("Public API (sendInterviewConfirmation)", () => {
         it("should successfully send interview confirmation email", async () => {
             const details = {
                 name: "Aarav Gupta",
-                email: "aarav@example.com",
+                email: "aarav.gupta2026@vitstudent.ac.in",
                 time: "2026-10-25T15:00:00+05:30",
                 meetingLink: "https://meet.example.com/aarav"
             };
@@ -237,15 +361,15 @@ describe("emailer Module Test Suite (Interview Confirmation)", () => {
             const result = await sendInterviewConfirmation(details);
 
             assert.strictEqual(result.success, true);
-            assert.strictEqual(result.recipient, "aarav@example.com");
+            assert.strictEqual(result.recipient, "aarav.gupta2026@vitstudent.ac.in");
             assert.ok(result.messageId);
 
             // Verify the mock received exactly one email with correct parameters
             assert.strictEqual(mockSentEmails.length, 1);
             const sent = mockSentEmails[0];
 
-            assert.strictEqual(sent.to, "aarav@example.com");
-            assert.strictEqual(sent.subject, "Interview Confirmation – Club Recruitment");
+            assert.strictEqual(sent.to, "aarav.gupta2026@vitstudent.ac.in");
+            assert.strictEqual(sent.subject, "Interview Confirmed | TAM Recruitment");
             assert.match(sent.text, /Aarav Gupta/);
             assert.match(sent.text, /https:\/\/meet\.example\.com\/aarav/);
             assert.match(sent.html, /href="https:\/\/meet\.example\.com\/aarav"/);
@@ -279,7 +403,7 @@ describe("emailer Module Test Suite (Interview Confirmation)", () => {
 
             const details = {
                 name: "Sneha Reddy",
-                email: "sneha@example.com",
+                email: "sneha.reddy2024@vitstudent.ac.in",
                 time: "2026-10-25T15:00:00+05:30",
                 meetingLink: "https://meet.example.com/interview"
             };
@@ -318,3 +442,283 @@ describe("emailer Module Test Suite (Interview Confirmation)", () => {
         });
     });
 });
+
+// ==========================================
+// OTP Emailer Test Suite
+// ==========================================
+describe("emailer Module Test Suite (OTP Verification)", () => {
+    let mockSentEmails = [];
+    let mockTransporter;
+
+    beforeEach(() => {
+        mockSentEmails = [];
+        mockTransporter = {
+            sendMail: async (mailOptions) => {
+                mockSentEmails.push(mailOptions);
+                return {
+                    messageId: `<mock-otp-${Date.now()}@recruitment.internal>`,
+                    response: "250 Message accepted"
+                };
+            }
+        };
+        setTransporter(mockTransporter);
+    });
+
+    afterEach(() => {
+        resetTransporter();
+    });
+
+    // 1. Validation Logic
+    describe("OTP Validation Logic (validateOTPDetails)", () => {
+        it("should accept valid OTP details with 6-digit numeric string", () => {
+            const input = {
+                name: "Rahul Sharma",
+                email: "rahul.sharma2025@vitstudent.ac.in",
+                otp: "004821"
+            };
+            const result = validateOTPDetails(input);
+            assert.strictEqual(result.isValid, true);
+            assert.strictEqual(isValidOTPDetails(input), true);
+        });
+
+        it("should accept valid 6-digit OTPs across range 000000 to 999999", () => {
+            const validOtps = ["000000", "004821", "123456", "999999", "010101"];
+            for (const otp of validOtps) {
+                const res = validateOTPDetails({
+                    name: "Rahul Sharma",
+                    email: "rahul.sharma2025@vitstudent.ac.in",
+                    otp
+                });
+                assert.strictEqual(res.isValid, true, `Expected valid for OTP: ${otp}`);
+                assert.strictEqual(OTP_REGEX.test(otp), true);
+            }
+        });
+
+        it("should preserve leading-zero OTPs without converting to number", () => {
+            const input = {
+                name: "Aarav Gupta",
+                email: "aarav.gupta2026@vitstudent.ac.in",
+                otp: "000123"
+            };
+            const result = validateOTPDetails(input);
+            assert.strictEqual(result.isValid, true);
+            assert.strictEqual(input.otp, "000123");
+            assert.strictEqual(typeof input.otp, "string");
+        });
+
+        it("should accept OTP with surrounding whitespace when trimmed", () => {
+            const input = {
+                name: "Rahul Sharma",
+                email: "rahul.sharma2025@vitstudent.ac.in",
+                otp: "  004821  "
+            };
+            const result = validateOTPDetails(input);
+            assert.strictEqual(result.isValid, true);
+        });
+
+        it("should reject non-object or null input", () => {
+            assert.strictEqual(validateOTPDetails(null).isValid, false);
+            assert.strictEqual(validateOTPDetails(undefined).isValid, false);
+            assert.strictEqual(validateOTPDetails([]).isValid, false);
+            assert.strictEqual(validateOTPDetails("string").isValid, false);
+        });
+
+        it("should reject missing or empty name", () => {
+            const badNames = [
+                { name: "", email: "rahul.sharma2025@vitstudent.ac.in", otp: "004821" },
+                { name: "   ", email: "rahul.sharma2025@vitstudent.ac.in", otp: "004821" },
+                { email: "rahul.sharma2025@vitstudent.ac.in", otp: "004821" },
+                { name: null, email: "rahul.sharma2025@vitstudent.ac.in", otp: "004821" },
+                { name: 123, email: "rahul.sharma2025@vitstudent.ac.in", otp: "004821" }
+            ];
+            for (const input of badNames) {
+                const res = validateOTPDetails(input);
+                assert.strictEqual(res.isValid, false);
+                assert.match(res.error, /name/i);
+            }
+        });
+
+        it("should reject missing or invalid college email", () => {
+            const badEmails = [
+                { name: "Rahul", email: "", otp: "004821" },
+                { name: "Rahul", email: "rahul@gmail.com", otp: "004821" },
+                { name: "Rahul", email: "rahul@vit.ac.in", otp: "004821" },
+                { name: "Rahul", email: "rahulsharma2025@vitstudent.ac.in", otp: "004821" },
+                { name: "Rahul", otp: "004821" },
+                { name: "Rahul", email: null, otp: "004821" }
+            ];
+            for (const input of badEmails) {
+                const res = validateOTPDetails(input);
+                assert.strictEqual(res.isValid, false);
+                assert.match(res.error, /email/i);
+            }
+        });
+
+        it("should reject missing OTP", () => {
+            const missing = [
+                { name: "Rahul", email: "rahul.sharma2025@vitstudent.ac.in" },
+                { name: "Rahul", email: "rahul.sharma2025@vitstudent.ac.in", otp: null },
+                { name: "Rahul", email: "rahul.sharma2025@vitstudent.ac.in", otp: undefined },
+                { name: "Rahul", email: "rahul.sharma2025@vitstudent.ac.in", otp: "" }
+            ];
+            for (const input of missing) {
+                const res = validateOTPDetails(input);
+                assert.strictEqual(res.isValid, false);
+                assert.match(res.error, /otp/i);
+            }
+        });
+
+        it("should reject malformed OTP (fewer than 6 digits, more than 6 digits, non-numeric, numbers)", () => {
+            const malformed = [
+                "12345",       // 5 digits
+                "1",           // 1 digit
+                "1234567",     // 7 digits
+                "12345678",    // 8 digits
+                "12345a",      // alphanumeric
+                "abcdef",      // letters
+                "12 456",      // space inside
+                "12-456",      // hyphen
+                "00482!",      // special character
+                123456,        // numeric type instead of string
+                4821           // number with lost leading zeros
+            ];
+            for (const otp of malformed) {
+                const res = validateOTPDetails({
+                    name: "Rahul",
+                    email: "rahul.sharma2025@vitstudent.ac.in",
+                    otp
+                });
+                assert.strictEqual(res.isValid, false, `Expected rejection for malformed OTP: ${otp}`);
+                assert.match(res.error, /otp/i);
+            }
+        });
+    });
+
+    // 2. Email Preparation
+    describe("OTP Email Preparation (prepareOTPEmail)", () => {
+        it("should prepare valid OTP email with correct recipient, subject, text and HTML", () => {
+            const input = {
+                name: "Rahul Sharma",
+                email: "rahul.sharma2025@vitstudent.ac.in",
+                otp: "004821"
+            };
+
+            const email = prepareOTPEmail(input);
+            assert.ok(email);
+            assert.strictEqual(email.to, "rahul.sharma2025@vitstudent.ac.in");
+            assert.strictEqual(email.subject, "Verify your email | TAM Recruitment");
+
+            // Plain text check
+            assert.match(email.message, /Hello Rahul Sharma/);
+            assert.match(email.message, /004821/);
+            assert.match(email.message, /Use this verification code to complete your login/);
+            assert.match(email.message, /Team TAM/);
+
+            // HTML check
+            assert.match(email.html, /Verify your email/);
+            assert.match(email.html, /Rahul Sharma/);
+            assert.match(email.html, /004821/);
+            assert.match(email.html, /Verification Code/i);
+            assert.match(email.html, /If you didn't request this code, you can ignore this email/);
+            assert.match(email.html, /Team TAM/);
+
+            // Check attachments
+            assert.ok(Array.isArray(email.attachments));
+            assert.strictEqual(email.attachments.length, 1);
+            assert.strictEqual(email.attachments[0].cid, "tam-club-logo@recruitment");
+            assert.match(email.html, /cid:tam-club-logo@recruitment/);
+        });
+
+        it("should preserve leading-zero OTP in plain text and HTML", () => {
+            const input = {
+                name: "Sneha Reddy",
+                email: "sneha.reddy2024@vitstudent.ac.in",
+                otp: "000007"
+            };
+            const email = prepareOTPEmail(input);
+            assert.match(email.text, /000007/);
+            assert.match(email.html, /000007/);
+            assert.doesNotMatch(email.html, />7</);
+        });
+
+        it("should HTML escape candidate name and dynamic content", () => {
+            const input = {
+                name: '<script>alert("xss")</script> & "Admin"',
+                email: "test.candidate2024@vitstudent.ac.in",
+                otp: "123456"
+            };
+            const email = prepareOTPEmail(input);
+            assert.doesNotMatch(email.html, /<script>/);
+            assert.match(email.html, /&lt;script&gt;alert\(&quot;xss&quot;\)&lt;\/script&gt; &amp; &quot;Admin&quot;/);
+        });
+
+        it("should return null for null or non-object input", () => {
+            assert.strictEqual(prepareOTPEmail(null), null);
+            assert.strictEqual(prepareOTPEmail(undefined), null);
+            assert.strictEqual(prepareOTPEmail("not an object"), null);
+        });
+    });
+
+    // 3. Public API (sentOTP)
+    describe("Public API (sentOTP)", () => {
+        it("should successfully send OTP verification email using mocked transporter", async () => {
+            const details = {
+                name: "Aarav Gupta",
+                email: "aarav.gupta2026@vitstudent.ac.in",
+                otp: "004821"
+            };
+
+            const result = await sentOTP(details);
+            assert.strictEqual(result.success, true);
+            assert.strictEqual(result.recipient, "aarav.gupta2026@vitstudent.ac.in");
+            assert.ok(result.messageId);
+
+            // Verify mock received email
+            assert.strictEqual(mockSentEmails.length, 1);
+            const sent = mockSentEmails[0];
+            assert.strictEqual(sent.to, "aarav.gupta2026@vitstudent.ac.in");
+            assert.strictEqual(sent.subject, "Verify your email | TAM Recruitment");
+            assert.match(sent.text, /004821/);
+            assert.match(sent.html, /004821/);
+        });
+
+        it("should throw validation error on invalid input and NOT trigger a send", async () => {
+            const invalidDetails = {
+                name: "Aarav Gupta",
+                email: "invalid-email",
+                otp: "123456"
+            };
+
+            await assert.rejects(
+                async () => {
+                    await sentOTP(invalidDetails);
+                },
+                /Validation Error/i
+            );
+
+            assert.strictEqual(mockSentEmails.length, 0);
+        });
+
+        it("should throw when transporter fails (SMTP error)", async () => {
+            const failingTransporter = {
+                sendMail: async () => {
+                    throw new Error("SMTP connection rejected: 550 Relaying denied");
+                }
+            };
+
+            const details = {
+                name: "Priya Patel",
+                email: "priya.patel2025@vitstudent.ac.in",
+                otp: "654321"
+            };
+
+            await assert.rejects(
+                async () => {
+                    await sentOTP(details, failingTransporter);
+                },
+                /SMTP connection rejected/i
+            );
+        });
+    });
+});
+

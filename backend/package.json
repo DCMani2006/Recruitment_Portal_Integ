@@ -11,7 +11,7 @@
     "db:seed": "prisma db seed",
     "db:reset": "tsx scripts/reset-db.ts",
     "db:config": "tsx scripts/setup-config.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node --test src/emailer/emailer.test.js"
   },
   "keywords": [],
   "author": "",
@@ -26,7 +26,7 @@
     "express-rate-limit": "^8.7.1",
     "helmet": "^8.3.0",
     "jsonwebtoken": "^9.0.3",
-    "nodemailer": "^10.1.7",
+    "nodemailer": "^10.2.0",
     "zod": "^3.25.76"
   },
   "devDependencies": {
