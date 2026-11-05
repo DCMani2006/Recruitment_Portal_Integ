@@ -11,3 +11,9 @@ export const STAGES = [
 
 // Slot choosing is only open once the candidate is shortlisted
 export const SLOT_ACCESS_STAGES: Stage[] = [Stage.SHORTLISTED, Stage.SLOT_CHOOSING, Stage.INTERVIEW];
+
+// The admin backend can mark a booked candidate SELECTED or REJECTED without removing the booking.
+// A rejected candidate never sees that booking or its meeting link, and nobody can cancel once
+// the result is out (only INTERVIEW bookings can be cancelled).
+export const bookingVisible = (stage: Stage) => stage !== Stage.REJECTED;
+export const canCancelBooking = (stage: Stage) => stage === Stage.INTERVIEW;

@@ -76,7 +76,8 @@ export interface StatusApplication {
   deadlinePassed: boolean;
   editable: boolean;
   canChooseSlots: boolean;
-  booking: { id: string; slot: SlotTime } | null;
+  booking: { id: string; slot: SlotTime } | null; // null for a rejected candidate even if a slot is still held
+  canCancelBooking: boolean; // false once the result (Selected / Rejected) is out
 }
 export interface StatusResponse {
   stages: { key: Stage; label: string; order: number }[];
