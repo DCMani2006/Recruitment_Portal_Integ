@@ -1,7 +1,7 @@
 import { api as realApi } from "./api";
 import { mockApi } from "./mock";
 
-const useMock = process.env.NEXT_PUBLIC_USE_MOCK !== "false";
+const useMock = process.env.NEXT_PUBLIC_USE_MOCK === "true";
 
 export const api = useMock ? mockApi : realApi;
 export const isMockMode = useMock;
