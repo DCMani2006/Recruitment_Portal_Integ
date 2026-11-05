@@ -112,6 +112,11 @@ function FormContent() {
   }, []);
 
   const fetchForm = useCallback(async () => {
+    if (typeof window !== "undefined") {
+      try {
+        sessionStorage.removeItem("tam.justSignedUp");
+      } catch {}
+    }
     try {
       const res = await api.form();
       setFormData(res);

@@ -31,7 +31,7 @@ export function DeskHeader() {
         }}
       >
         <div>
-          <Link href="/" style={{ textDecoration: "none", color: "var(--ink)" }}>
+          <Link href="/?read=1" style={{ textDecoration: "none", color: "var(--ink)" }}>
             <span
               className="font-masthead"
               style={{ fontSize: "clamp(1.8rem, 4vw, 2.5rem)", display: "block", lineHeight: 1 }}

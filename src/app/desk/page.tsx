@@ -45,6 +45,11 @@ function DispatchPageContent() {
   const [highlightedDomain, setHighlightedDomain] = useState<Domain | null>(null);
 
   const fetchStatus = useCallback(async () => {
+    if (typeof window !== "undefined") {
+      try {
+        sessionStorage.removeItem("tam.justSignedUp");
+      } catch {}
+    }
     try {
       const res = await api.status();
       setStatusData(res);

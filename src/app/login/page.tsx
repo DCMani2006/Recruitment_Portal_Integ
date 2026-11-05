@@ -62,27 +62,15 @@ function LoginScreen() {
   const domainParam = searchParams.get("domain") as Domain | null;
 
   // Determine destination URL based on first-time vs returning visit
-  // NOTE: this flag is per browser; a per-account version needs a backend field.
   const getDestinationUrl = useCallback((emailHint?: string) => {
-    if (nextUrl && nextUrl !== "/login") {
+    if (nextUrl && nextUrl !== "/login" && nextUrl !== "/") {
       if (domainParam && !nextUrl.includes("domain=")) {
         return `${nextUrl}${nextUrl.includes("?") ? "&" : "?"}domain=${domainParam}`;
       }
       return nextUrl;
     }
-    const targetEmail = (emailHint || user?.email || loginEmail || signupEmail || "").toLowerCase().trim();
-    if (targetEmail && typeof window !== "undefined") {
-      try {
-        const hasSeen = localStorage.getItem(`tam.seenEdition.${targetEmail}`) === "1";
-        if (hasSeen) {
-          return "/desk/form";
-        }
-      } catch {
-        // ignore
-      }
-    }
-    return "/";
-  }, [nextUrl, domainParam, user?.email, loginEmail, signupEmail]);
+    return "/desk/form";
+  }, [nextUrl, domainParam]);
 
   // Read URL error if present
   useEffect(() => {
@@ -145,7 +133,16 @@ function LoginScreen() {
       const res = await api.login(loginEmail, loginPassword);
       setToken(res.token);
       await refresh();
-      router.push(getDestinationUrl(loginEmail));
+      if (typeof window !== "undefined") {
+        try {
+          sessionStorage.removeItem("tam.justSignedUp");
+        } catch {}
+      }
+      if (nextUrl && nextUrl !== "/login" && nextUrl !== "/") {
+        router.push(nextUrl);
+      } else {
+        router.push("/desk/form");
+      }
     } catch (err) {
       setError(errorText(err));
     } finally {
@@ -228,7 +225,12 @@ function LoginScreen() {
 
       setToken(res.token);
       await refresh();
-      router.push(getDestinationUrl(signupEmail));
+      if (typeof window !== "undefined") {
+        try {
+          sessionStorage.setItem("tam.justSignedUp", "1");
+        } catch {}
+      }
+      router.push("/");
     } catch (err) {
       setError(errorText(err));
     } finally {

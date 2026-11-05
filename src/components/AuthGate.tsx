@@ -22,23 +22,13 @@ function AuthGateContent({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const token = getToken();
 
-    // 1. Signed-in visitor opening /login is sent to next, or /desk/form (if seen edition), or /
-    // NOTE: this flag is per browser; a per-account version needs a backend field.
+    // 1. Signed-in visitor opening /login is sent to next, or directly to /desk/form
     if (isLoginPage) {
       if (token && user) {
-        if (nextParam && nextParam !== "/login") {
+        if (nextParam && nextParam !== "/login" && nextParam !== "/") {
           router.replace(nextParam);
         } else {
-          const email = user.email?.toLowerCase().trim();
-          let hasSeen = false;
-          if (email && typeof window !== "undefined") {
-            try {
-              hasSeen = localStorage.getItem(`tam.seenEdition.${email}`) === "1";
-            } catch {
-              // ignore
-            }
-          }
-          router.replace(hasSeen ? "/desk/form" : "/");
+          router.replace("/desk/form");
         }
       }
       return;
