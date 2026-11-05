@@ -23,12 +23,11 @@ export const EDITION_META = {
 };
 
 export const INDEX_ENTRIES = [
-  { domain: "EDITORIAL" as Domain, title: "Editorial & Dispatches", page: 2 },
-  { domain: "DESIGN" as Domain, title: "Design & Visual Media", page: 3 },
-  { domain: "MARKETING" as Domain, title: "Marketing & Outreach", page: 4 },
-  { domain: "R_AND_D" as Domain, title: "Research & Development", page: 5 },
-  { domain: "MANAGEMENT" as Domain, title: "Management & Operations", page: 6 },
-  { domain: "TECHNICAL" as Domain, title: "Tech & Applied Projects", page: 7 },
+  { domain: "DESIGN" as Domain, title: "Design & Visual Media", page: 2 },
+  { domain: "MARKETING" as Domain, title: "Marketing & Outreach", page: 3 },
+  { domain: "R_AND_D" as Domain, title: "Research & Development", page: 4 },
+  { domain: "MANAGEMENT" as Domain, title: "Management & Operations", page: 5 },
+  { domain: "TECHNICAL" as Domain, title: "Tech & Applied Projects", page: 6 },
 ];
 
 export const INTRO_PAGE_CONTENT = {
@@ -128,26 +127,6 @@ export const DOMAIN_PAGES: DomainContent[] = [
       "Corporate liaison mastery",
     ],
     testNotice: "Operational case studies and triage scenarios are answered at the Desk.",
-  },
-  {
-    domain: "EDITORIAL",
-    pageNumber: 7,
-    kicker: "THE PRINTING PRESS",
-    headline: "CHRONICLERS OF ARTIFICIAL THOUGHT",
-    deck: "Authoring deep technical treatises, reviewing papers, and curating The TAM Times dispatches.",
-    leadImage: "/images/editorial-1.png",
-    imageCaption: "THE COMPOSITOR'S SLATE: INKING TRUTH AND INTELLECT.",
-    bodyParagraphs: [
-      "The Editorial desk is the philosophical conscience of the club. Our writers distill intricate mathematical concepts into lucid, captivating technical prose that both novices and seasoned researchers admire.",
-      "From running our blog and investigative interviews to crafting physical print gazettes, editorial fellows preserve our institutional history and shape the intellectual culture of the club.",
-    ],
-    wantedSkills: [
-      "Technical writing precision",
-      "Deep literature analysis",
-      "Proofreading & line editing",
-      "Storytelling & journalism",
-    ],
-    testNotice: "Editorial prompts and headline editing challenges are presented at the Desk.",
   },
   {
     domain: "TECHNICAL",

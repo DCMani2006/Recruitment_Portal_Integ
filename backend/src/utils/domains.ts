@@ -8,5 +8,4 @@ export const DOMAIN_LABELS: Record<DomainType, string> = {
   DESIGN: "Design",
   MARKETING: "Marketing",
   R_AND_D: "R&D",
-  EDITORIAL: "Editorial",
 };

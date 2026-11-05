@@ -227,7 +227,7 @@ export function FrontPage({ onSelectPage }: FrontPageProps) {
               marginRight: "auto",
             }}
           >
-            Positions open across tech, management, research, marketing, design, editorial. Prior project experience is valued, but curiosity and consistency matter most.
+            Positions open across tech, management, research, marketing and design. Prior project experience is valued, but curiosity and consistency matter most.
           </p>
         </div>
 

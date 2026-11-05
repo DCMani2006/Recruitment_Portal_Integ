@@ -3,7 +3,7 @@
 /**
  * UNUSED COMPONENT:
  * Application posters (<ApplyAd>) have been removed from pages 2 to 7 per requirement.
- * Form filling is now exclusively initiated from the coupon page (9) and thank-you page (10).
+ * Form filling is now exclusively initiated from the coupon page and thank-you page.
  * This component file is retained in the project for reference and compatibility.
  */
 
@@ -42,11 +42,6 @@ export const DOMAIN_AD_DATA: Record<
     headline: "WANTED: ORGANISERS",
     subline: "Run events, lead teams, keep the club moving.",
     name: "Management",
-  },
-  EDITORIAL: {
-    headline: "WANTED: WRITERS & EDITORS",
-    subline: "Turn technical ideas into readable stories.",
-    name: "Editorial",
   },
   TECHNICAL: {
     headline: "WANTED: BUILDERS",
