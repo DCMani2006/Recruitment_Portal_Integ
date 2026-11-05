@@ -22,6 +22,24 @@ export interface SendConfirmationResult {
     messageId: string;
 }
 
+export interface OTPDetails {
+    /** Full name of the candidate */
+    name: string;
+    /** Official college email address */
+    email: string;
+    /** Exactly 6-digit numeric verification code */
+    otp: string;
+}
+
+export interface SendOTPResult {
+    /** True if email was successfully dispatched to SMTP transporter */
+    success: boolean;
+    /** Recipient email address */
+    recipient: string;
+    /** Unique message identifier returned by nodemailer */
+    messageId: string;
+}
+
 export interface ValidationResult {
     isValid: boolean;
     error?: string;
@@ -33,8 +51,15 @@ export interface EmailData {
     message: string;
     text: string;
     html: string;
-    formattedTime: string;
-    meetingLink: string;
+    formattedTime?: string;
+    meetingLink?: string;
+    attachments?: Array<{
+        filename: string;
+        path: string;
+        cid?: string;
+        contentDisposition?: string;
+        contentType?: string;
+    }>;
 }
 
 export interface EmailOptions {
@@ -44,6 +69,7 @@ export interface EmailOptions {
     text?: string;
     html?: string;
     replyTo?: string;
+    attachments?: any[];
 }
 
 /**
@@ -58,11 +84,28 @@ export function sendInterviewConfirmation(
 ): Promise<SendConfirmationResult>;
 
 /**
+ * Validates, prepares, and immediately sends an OTP verification email.
+ *
+ * @throws Error if input fails validation or SMTP delivery fails
+ */
+export function sentOTP(
+    details: OTPDetails,
+    customTransporter?: any
+): Promise<SendOTPResult>;
+
+/**
  * Prepares the confirmation email subject, text body, and HTML body without sending.
  * Useful for inspections, previews, and unit testing.
  */
 export function prepareConfirmationEmail(
     details: InterviewConfirmationPayload
+): EmailData | null;
+
+/**
+ * Prepares the OTP email subject, text body, and HTML body without sending.
+ */
+export function prepareOTPEmail(
+    details: OTPDetails
 ): EmailData | null;
 
 /**
@@ -78,6 +121,44 @@ export function formatInterviewTime(
 export function validateInterviewDetails(
     details: any
 ): ValidationResult;
+
+/**
+ * Validates candidate details and 6-digit numeric OTP code before sending verification email.
+ */
+export function validateOTPDetails(
+    details: any
+): ValidationResult;
+
+/**
+ * Boolean validation check helper for OTP details.
+ */
+export function isValidOTPDetails(
+    details: any
+): boolean;
+
+/**
+ * Exactly 6 numeric digits (000000 to 999999).
+ */
+export const OTP_REGEX: RegExp;
+
+/**
+ * Regular expression validating college email: firstName.SurnameYear@vitstudent.ac.in
+ */
+export const COLLEGE_EMAIL_REGEX: RegExp;
+
+/**
+ * Validates a college email string against the official VIT student email pattern.
+ */
+export function validateCollegeEmail(
+    email: any
+): ValidationResult;
+
+/**
+ * Boolean validation check helper for college email.
+ */
+export function isValidCollegeEmail(
+    email: any
+): boolean;
 
 /**
  * Boolean validation check helper.

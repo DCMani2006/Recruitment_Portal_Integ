@@ -130,6 +130,10 @@ async function sendEmail(email, customTransporter = null) {
         mailOptions.html = email.html;
     }
 
+    if (email.attachments) {
+        mailOptions.attachments = email.attachments;
+    }
+
     return transporterToUse.sendMail(mailOptions);
 }
 
