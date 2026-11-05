@@ -83,6 +83,14 @@ export const DOMAIN_DETAILS: DomainInfo[] = [
     ],
   },
   {
+    domain: "EDITORIAL",
+    label: "Editorial",
+    subsections: [
+      { id: "writing", name: "Technical Journalism" },
+      { id: "print", name: "Print & Dispatch Production" },
+    ],
+  },
+  {
     domain: "TECHNICAL",
     label: "Tech",
     subsections: [
@@ -181,6 +189,29 @@ const SEED_QUESTIONS: Record<Domain, { id: string; subsectionId: string | null; 
       id: "q-mgmt-3",
       subsectionId: "outreach",
       text: "How would you pitch industry sponsors for an exclusive recruitment round or compute-grant sponsorship?",
+      maxLength: 2000,
+      required: true,
+    },
+  ],
+  EDITORIAL: [
+    {
+      id: "q-edit-1",
+      subsectionId: null,
+      text: "Why do you want to write and edit for The TAM Times gazette?",
+      maxLength: 2000,
+      required: true,
+    },
+    {
+      id: "q-edit-2",
+      subsectionId: "writing",
+      text: "Explain 'Attention is All You Need' in 150 words as if writing a morning front-page column.",
+      maxLength: 2000,
+      required: true,
+    },
+    {
+      id: "q-edit-3",
+      subsectionId: "print",
+      text: "Edit the following sentence for rhythm and punch: 'The neural network was trained by researchers very thoroughly to do tasks.'",
       maxLength: 2000,
       required: true,
     },

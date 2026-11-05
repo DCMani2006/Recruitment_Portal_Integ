@@ -110,7 +110,7 @@ export function DeskHeader() {
 
         <div>
           <Link
-            href="/"
+            href="/?read=1"
             className="btn-ink"
             style={{
               fontSize: "0.72rem",
