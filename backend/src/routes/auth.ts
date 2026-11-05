@@ -11,7 +11,7 @@ import { asyncHandler } from "../middleware/error";
 import { profileSchema } from "../utils/validators";
 import { assertSignupOpen, getConfig } from "../utils/recruitment";
 import { createOtp, verifyOtp } from "../utils/otp";
-import { sendMail } from "../utils/mailer";
+import { sendCodeEmail } from "../utils/mailer";
 
 // Sign up and password reset prove the email with a 6-digit code (OTP).
 // Log in is email + the password set at sign up.
@@ -67,7 +67,7 @@ router.post(
       if (user) throw new HttpError(409, "This email is already registered. Please log in.", "ALREADY_REGISTERED");
       assertSignupOpen(await getConfig());
       const { code: otp, otpToken } = createOtp(addr, "signup");
-      await sendMail(addr, "Your verification code", `Your code is ${otp}. It expires in 10 minutes.\n\nIf you didn't request it, ignore this email.`);
+      await sendCodeEmail(addr, otp, "signup");
       res.json({ sent: true, otpToken, ...(config.showOtpCodes ? { testCode: otp } : {}) });
       return;
     }
@@ -78,7 +78,7 @@ router.post(
       return;
     }
     const { code: otp, otpToken } = createOtp(addr, "reset", versionOf(user.passwordHash));
-    await sendMail(addr, "Reset your password", `Your password reset code is ${otp}. It expires in 10 minutes.\n\nIf you didn't request it, ignore this email.`);
+    await sendCodeEmail(addr, otp, "reset", user.name);
     // test deployments without email can show the code on screen (needs test tools + SHOW_OTP_CODES=true)
     res.json({ sent: true, otpToken, ...(config.showOtpCodes ? { testCode: otp } : {}) });
   })

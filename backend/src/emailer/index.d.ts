@@ -29,6 +29,8 @@ export interface OTPDetails {
     email: string;
     /** Exactly 6-digit numeric verification code */
     otp: string;
+    /** "signup" (default) or "reset": changes the subject and wording */
+    purpose?: "signup" | "reset";
 }
 
 export interface SendOTPResult {
