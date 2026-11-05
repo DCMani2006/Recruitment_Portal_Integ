@@ -254,7 +254,7 @@ Technical Association of [College Name]`;
             </div>
 
             <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;font-size:13px;color:#94A3B8;letter-spacing:0.2px;line-height:1.45;margin-top:8px;">
-                An important announcement from the TAM Recruitment Desk.
+                An important announcement from the Team TAM.
             </div>
         </td>
     </tr>
@@ -346,13 +346,13 @@ Technical Association of [College Name]`;
         </td>
     </tr>
 
-    <!-- Recruitment Desk Instructions Card -->
+    <!-- Team TAM Instructions Card -->
     <tr>
         <td bgcolor="#111C32" class="content-padding" style="padding:4px 20px 16px;background-color:#111C32;">
             <table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#0E1726" class="sub-card" style="border:1px solid #263B5A;border-radius:6px;background-color:#0E1726;">
                 <tr>
                     <td bgcolor="#16233B" style="padding:7px 14px;background-color:#16233B;border-bottom:1px solid #263B5A;text-align:left;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;font-size:10px;font-weight:700;letter-spacing:1.5px;color:#38BDF8;text-transform:uppercase;">
-                        FROM THE RECRUITMENT DESK
+                        FROM THE TEAM TAM
                     </td>
                 </tr>
                 <tr>
@@ -372,30 +372,15 @@ Technical Association of [College Name]`;
         <td bgcolor="#111C32" class="content-padding" style="padding:0 22px 18px;text-align:left;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#CBD5E1;background-color:#111C32;">
             <div style="font-size:14px;line-height:1.5;color:#CBD5E1;">
                 Yours sincerely,<br>
-                <strong style="color:#F1F5F9;font-weight:700;">The Recruitment Desk</strong>
+                <strong style="color:#F1F5F9;font-weight:700;">The Team TAM</strong>
             </div>
 
             <div style="font-size:11px;font-weight:600;letter-spacing:0.5px;color:#38BDF8;margin-top:4px;">
-                AI &amp; ML Club · VIT Vellore
+                The AI &amp; ML Club · VIT Vellore
             </div>
         </td>
     </tr>
 
-    <!-- Footer Strip -->
-    <tr>
-        <td bgcolor="#0E1726" class="content-padding" style="padding:10px 20px;background-color:#0E1726;border-top:1px solid #263B5A;">
-            <table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#0E1726" style="background-color:#0E1726;">
-                <tr>
-                    <td bgcolor="#0E1726" style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;font-size:9px;font-weight:700;letter-spacing:1.5px;color:#94A3B8;background-color:#0E1726;text-transform:uppercase;">
-                        THE TAM TIMES
-                    </td>
-                    <td align="right" bgcolor="#0E1726" style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;font-size:9px;font-weight:700;letter-spacing:1.5px;color:#38BDF8;background-color:#0E1726;text-transform:uppercase;">
-                        RECRUITMENT DESK
-                    </td>
-                </tr>
-            </table>
-        </td>
-    </tr>
 
 </table>
 </td></tr>

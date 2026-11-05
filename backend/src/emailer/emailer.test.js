@@ -162,7 +162,7 @@ describe("emailer Module Test Suite (Interview Confirmation)", () => {
         it("should accept valid college emails matching firstName.SurnameYear@vitstudent.ac.in", () => {
             const validEmails = [
                 "jhon.doe2023@vitstudent.ac.in",
-                "ark.maheshwari2025@vitstudent.ac.in",
+                "rohit.verma2025@vitstudent.ac.in",
                 "john.doe2023@vitstudent.ac.in",
                 "aarav.sharma2026@vitstudent.ac.in",
                 "priya.patel2022@vitstudent.ac.in"
@@ -180,7 +180,7 @@ describe("emailer Module Test Suite (Interview Confirmation)", () => {
             const mixedCaseEmails = [
                 "JHON.DOE2023@VITSTUDENT.AC.IN",
                 "John.Doe2023@VitStudent.Ac.In",
-                "ark.maheshwari2025@VITSTUDENT.AC.IN",
+                "rohit.verma2025@VITSTUDENT.AC.IN",
                 "AARAV.sharma2026@vitstudent.AC.IN"
             ];
 
@@ -326,7 +326,7 @@ describe("emailer Module Test Suite (Interview Confirmation)", () => {
 
             // Check closing
             assert.match(email.message, /Team TAM/);
-            assert.match(email.html, /The Recruitment Desk/);
+            assert.match(email.html, /The Team TAM/);
         });
 
         it("should respect explicit UTC 'Z' timezone", () => {

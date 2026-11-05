@@ -34,7 +34,7 @@ const candidates = [
   },
   {
     name: "Test Candidate 2",
-    email: "ark.maheshwari2025@vitstudent.ac.in", // Fill in manually (e.g. "firstName.SurnameYear@vitstudent.ac.in")
+    email: "", // Fill in manually (e.g. "firstName.SurnameYear@vitstudent.ac.in")
     time: "2026-10-25T16:00:00+05:30",
     meetingLink: "https://meet.example.com/interview"
   }
