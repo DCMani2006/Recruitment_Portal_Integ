@@ -9,6 +9,7 @@ import { bookSlotSchema, calendarQuerySchema, objectId, slotsQuerySchema } from 
 import { assertSlotAccess, getApplication } from "../utils/recruitment";
 import { istDateKey, istDayRange, istMonthRange } from "../utils/time";
 import { bookingVisible, canCancelBooking } from "../utils/stages";
+import { sendBookingConfirmation } from "../utils/bookingEmail";
 
 const router = Router();
 router.use(...requireUser);
@@ -137,6 +138,8 @@ router.post(
           return created;
         });
         res.status(201).json({ booking, meetingLink: slot.meetingLink });
+        // after replying, so the email never slows down or undoes the booking
+        void sendBookingConfirmation(app.id, { name: user.name, email: user.email }, slot);
         return;
       } catch (e) {
         const writeConflict = e instanceof Prisma.PrismaClientKnownRequestError && e.code === "P2034";
