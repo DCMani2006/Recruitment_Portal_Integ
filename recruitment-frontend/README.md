@@ -66,9 +66,9 @@ the firewall: allow it on private networks.
 
 ## How to test
 
-1. **Sign up:** open the Sign up tab, enter an official college email (`firstName.SurnameYear@vitstudent.ac.in`), press Send code, and enter the 6-digit
+1. **Sign up:** open the Sign up tab, enter an `@vitstudent.ac.in` email, press Send code, and enter the 6-digit
    code (from your inbox, or from the backend terminal). Fill in your details, pick some domains, and set a password.
-   Any other email (e.g. `@gmail.com` or `@vit.ac.in`) or malformed address is refused.
+   Any other email (e.g. `@gmail.com` or `@vit.ac.in`) is refused.
 2. **Form:** answer the questions, press Save under each one, then Submit. Submitting with blank required
    answers lists the missing questions. After submitting, that domain's answers are locked.
 3. **Shortlist yourself:** on the Status page, scroll to **Test tools** and set a domain to "Shortlisted".
@@ -86,7 +86,7 @@ Every rule the backend enforces shows up as a readable message (wrong code, dead
 ## Notes
 
 - Sign up and password reset check the email with a 6-digit code. Log in is email + password. Only
-  official college emails (`firstName.SurnameYear@vitstudent.ac.in`) are accepted. The backend enforces all of this.
+  `@vitstudent.ac.in` emails are accepted. The backend enforces all of this.
 - Passwords need at least 8 characters. A code works for 10 minutes. Each email can request 3 codes and make
   6 code attempts per 10 minutes, and 10 login attempts per 15 minutes.
 - Accounts made before passwords existed have no password: use "Forgot password?" to set one.

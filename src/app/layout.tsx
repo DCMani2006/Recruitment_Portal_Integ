@@ -1,53 +1,31 @@
-import type { Metadata } from 'next';
-import { Cinzel, Plus_Jakarta_Sans, JetBrains_Mono } from 'next/font/google';
-import './globals.css';
-import { SceneWrapper } from '@/components/canvas/SceneWrapper';
-
-const cinzel = Cinzel({
-  subsets: ['latin'],
-  weight: ['500', '600', '700'],
-  variable: '--font-display',
-  display: 'swap',
-});
-
-const jakarta = Plus_Jakarta_Sans({
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
-  variable: '--font-sans',
-  display: 'swap',
-});
-
-const jetbrainsMono = JetBrains_Mono({
-  weight: ['400', '500', '700'],
-  subsets: ['latin'],
-  variable: '--font-mono',
-  display: 'swap',
-});
+import type { Metadata } from "next";
+import "@fontsource/pirata-one";
+import "@fontsource/anton";
+import "@fontsource/im-fell-english";
+import "@fontsource/im-fell-english/400-italic.css";
+import "@fontsource/old-standard-tt";
+import "@fontsource/old-standard-tt/700.css";
+import "./globals.css";
+import { SessionProvider } from "@/lib/session";
+import { AuthGate } from "@/components/AuthGate";
 
 export const metadata: Metadata = {
-  title: 'THE AI-ML CLUB // The Impossible Spire — Recruitment 2026',
+  title: "The TAM Times — Recruitment Portal | The AI & ML Club",
   description:
-    'Interactive Isometric 3D Monument Valley Recruitment Portal for The AI-ML Club (VIT Vellore). Traverse the Spire, illuminate the Courtyard Runes, and align the Summit Astrolabe.',
+    "Official recruitment gazette of TAM (The AI & ML Club). Turn the pages to explore domains, inspect requirements, and submit your dispatches at the Subscriber's Desk.",
 };
 
 export default function RootLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode;
-}) {
+}>) {
   return (
-    <html
-      lang="en"
-      className={`${cinzel.variable} ${jakarta.variable} ${jetbrainsMono.variable} dark`}
-    >
-      <body className="bg-[#00BFA5] text-white font-sans antialiased overflow-hidden select-none">
-        {/* Persistent 3D Isometric WebGL Canvas Shell (Z-Index 0, Fixed) */}
-        <SceneWrapper />
-
-        {/* Accessible HTML DOM Foreground Layer (Z-Index 10-50) */}
-        <main className="relative z-10 w-full h-full pointer-events-none">
-          {children}
-        </main>
+    <html lang="en">
+      <body>
+        <SessionProvider>
+          <AuthGate>{children}</AuthGate>
+        </SessionProvider>
       </body>
     </html>
   );

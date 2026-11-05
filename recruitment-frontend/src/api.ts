@@ -9,9 +9,8 @@ const BASE =
 const TOKEN_KEY = "recruitment-token";
 
 export const STUDENT_EMAIL_DOMAIN = "vitstudent.ac.in";
-export const COLLEGE_EMAIL_REGEX = /^[a-zA-Z]+\.[a-zA-Z]+[0-9]{4}@vitstudent\.ac\.in$/i;
 export const isStudentEmail = (email: string) =>
-  typeof email === "string" && COLLEGE_EMAIL_REGEX.test(email.trim());
+  email.trim().toLowerCase().endsWith(`@${STUDENT_EMAIL_DOMAIN}`);
 
 export type Domain = "TECHNICAL" | "MANAGEMENT" | "DESIGN" | "MARKETING" | "R_AND_D" | "EDITORIAL";
 export type Stage = "FORM_FILLING" | "SHORTLISTED" | "SLOT_CHOOSING" | "INTERVIEW" | "SELECTED" | "REJECTED";
@@ -77,7 +76,8 @@ export interface StatusApplication {
   deadlinePassed: boolean;
   editable: boolean;
   canChooseSlots: boolean;
-  booking: { id: string; slot: SlotTime } | null;
+  booking: { id: string; slot: SlotTime } | null; // null for a rejected candidate even if a slot is still held
+  canCancelBooking: boolean; // false once the result (Selected / Rejected) is out
 }
 export interface StatusResponse {
   stages: { key: Stage; label: string; order: number }[];

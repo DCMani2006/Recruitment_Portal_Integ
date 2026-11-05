@@ -71,7 +71,7 @@ export default function Login({
 
   const checkEmail = () => {
     if (isStudentEmail(email)) return true;
-    setError(`Please use your official college email (firstName.SurnameYear@${STUDENT_EMAIL_DOMAIN}).`);
+    setError(`Please use your @${STUDENT_EMAIL_DOMAIN} email.`);
     return false;
   };
 
