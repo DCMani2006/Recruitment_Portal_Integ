@@ -611,7 +611,7 @@ describe("emailer Module Test Suite (OTP Verification)", () => {
             // Plain text check
             assert.match(email.message, /Hello Rahul Sharma/);
             assert.match(email.message, /004821/);
-            assert.match(email.message, /Use this verification code to complete your login/);
+            assert.match(email.message, /Use this verification code to complete your sign-up/);
             assert.match(email.message, /Team TAM/);
 
             // HTML check
